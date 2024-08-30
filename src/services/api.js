@@ -23,12 +23,6 @@ const postApi = {
       phone_number: number,
     });
   },
-  postVerifyCode(url, code, phoneNumber) {
-    return axiosInstance.post(url, {
-      phone_number: phoneNumber,
-      code: code,
-    });
-  },
   postToken(url, data) {
     return axiosInstance.post(url, {
       username: data.username,

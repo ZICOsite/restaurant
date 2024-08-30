@@ -1,5 +1,6 @@
 <script setup>
 import { postApi } from "@/services/api";
+import { useBookInfoStore } from "@/stores/bookInfoStore";
 import { useTableStore } from "@/stores/tableStore";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -7,6 +8,7 @@ const emit = defineEmits(["booking-close", "notification-open"]);
 
 const route = useRoute();
 const tableStore = useTableStore();
+const bookInfoStore = useBookInfoStore();
 
 const userName = ref("");
 const userPhone = ref("");
@@ -14,7 +16,7 @@ const startTime = ref("");
 const checked = ref(false);
 
 const postBookTable = async (event) => {
-  const formatedPhone = userPhone.value.replace(/\D/g, "");
+  const formatedPhone = "998" + userPhone.value.replace(/\D/g, "");
   const bookInfo = {
     table_id: +route.query.id,
     name: event.target.userName.value,
@@ -26,15 +28,17 @@ const postBookTable = async (event) => {
     email: null,
     date_of_birth: null,
   };
+  bookInfoStore.getBookInfo(bookInfo);
   try {
-    await postApi.postBookTable("book-table/", bookInfo);
-    await postApi.postSMSNotification(
+    const { data } = await postApi.postSMSNotification(
       "authentication/send-confirmation-code/",
       formatedPhone
     );
+    bookInfoStore.getSmsCode(data.confirmation_code);
     tableStore.getUserPhoneNumber(userPhone.value);
   } catch (error) {
     console.log("Error", error);
+    bookInfoStore.getShowError(error);
   }
   userName.value = "";
   userPhone.value = "";
@@ -80,10 +84,9 @@ const postBookTable = async (event) => {
             <InputMask
               id="booking__form-phone"
               v-model="userPhone"
-              mask="+998(99)999-99-99"
+              mask="(99)999-99-99"
               placeholder="+998 (xx) xxx-xx-xx"
             />
-            {{ userPhone }}
           </div>
           <label class="booking__form-birth">
             <Checkbox v-model="checked" :binary="true" />

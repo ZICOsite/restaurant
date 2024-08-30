@@ -2,7 +2,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "CenturyGothic";
+  // font-family: "CenturyGothic";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
   &::-webkit-scrollbar {
     width: 0;

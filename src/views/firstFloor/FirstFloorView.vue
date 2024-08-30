@@ -1,6 +1,6 @@
 <script setup>
 import { firstFloorDataSorted } from "@/helpers/svgPath";
-import { ref, onUnmounted, watchEffect } from "vue";
+import { ref, onUnmounted, watchEffect, watch } from "vue";
 import { useWebSocket } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
@@ -40,6 +40,8 @@ watchEffect(() => {
     }
   }
   if (tableStore.dateISOFormat) {
+    console.log(tableStore.dateISOFormat);
+
     try {
       const filter = {
         action: "filter",
@@ -68,7 +70,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/1.png"
+            xlink:href="@/assets/images/floor1/1.webp"
           ></image>
           <image
             v-else
@@ -76,7 +78,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/back.png"
+            xlink:href="@/assets/images/floor1/back.webp"
           ></image>
           <rect
             width="100%"
