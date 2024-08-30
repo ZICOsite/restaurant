@@ -1,0 +1,12 @@
+$CenturyGothic: ("Bold", 700), ("Regular", 400);
+
+@each $name, $weight in $CenturyGothic {
+  @font-face {
+    src: url(@/assets/fonts/Century-Gothic/CenturyGothic-#{$name}.woff2)
+      format("woff2");
+    font-family: "CenturyGothic";
+    font-weight: $weight;
+    font-style: normal;
+    font-display: swap;
+  }
+}

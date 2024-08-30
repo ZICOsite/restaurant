@@ -1,0 +1,15 @@
+@import "./fonts.scss";
+@import "./common.scss";
+
+// components
+@import "@/components/navbar/navbar.scss";
+@import "@/components/modal/modal.scss";
+@import "@/components/booking/booking.scss";
+@import "@/components/notification/notification.scss";
+// components
+
+// views
+@import "@/views/restaurant/restaurantView.scss";
+@import "@/views/firstFloor/firstFloorView.scss";
+@import "@/views/loginView/loginView.scss";
+// views

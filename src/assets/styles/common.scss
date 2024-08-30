@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "CenturyGothic";
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
+}
+
+body {
+  background: rgba(248, 248, 248, 1);
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+input,
+button,
+textarea {
+  border: none;
+  outline: none;
+  background: #fff;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  width: min(1770px, 100%);
+  padding: 0 25px;
+  margin: 0 auto;
+}
+
+.mask {
+  width: 100%;
+  height: 100%;
+
+  &:has(path:hover) .booked {
+    fill: red;
+  }
+
+  rect[fill] {
+    pointer-events: none;
+  }
+
+  path {
+    transition-property: fill-opacity, stroke-opacity;
+    transition-timing-function: ease;
+    transition-duration: 0.2s;
+    fill: #fff;
+    stroke: #fff;
+    stroke-width: 2px;
+    fill-opacity: 0.35;
+    stroke-opacity: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &.active {
+      stroke-opacity: 1;
+      stroke: #fff;
+      filter: drop-shadow(0 0 15px #fff);
+      fill: rgba(0, 255, 0, 0.7);
+      fill-opacity: 1;
+
+      &.booked {
+        stroke: #fff;
+        fill: rgba(255, 0, 0, 0.7);
+      }
+    }
+
+    // &.booked {
+    //   stroke-opacity: 1;
+    //   stroke: red;
+    // }
+
+    &:hover {
+      stroke-opacity: 1;
+      filter: drop-shadow(0 0 15px #fff);
+      fill: rgb(0, 255, 0);
+      background: white;
+      color: black;
+      border-radius: 20px;
+    }
+  }
+
+  &__overlay {
+    transition: 0.4s;
+
+    &:has(~ path:hover) {
+      fill-opacity: 0.6;
+    }
+  }
+}
+
+.wrapper {
+  background: #b45b36;
+}

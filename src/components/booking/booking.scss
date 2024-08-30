@@ -1,0 +1,141 @@
+.booking {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.6);
+  overflow: auto;
+  transition: 0.4s;
+
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &__form {
+    width: min(450px, 100%);
+    background: #fff;
+    border-radius: 15px;
+    padding: 16px;
+
+    &-content {
+      display: grid;
+      gap: 16px;
+    }
+
+    &-date {
+      background: #eee !important;
+      color: #5f6368 !important;
+      font-weight: 700;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    // &-list {
+    //   display: grid;
+    //   border-radius: 8px;
+    //   overflow: hidden;
+    // }
+
+    &-item {
+      color: red;
+      font-weight: 700;
+      padding: 10px;
+      font-size: clamp(14px, 2vw, 18px);
+
+      &:nth-of-type(odd) {
+        background: #eee;
+      }
+    }
+
+    &-time {
+      display: flex;
+      gap: 30px;
+      // justify-content: center;
+    }
+
+    &-label {
+      font-weight: 700;
+      font-size: 18px;
+      color: #000;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      @media (width <= 375px) {
+        flex-direction: column;
+      }
+    }
+
+    &-input {
+      background: #eee;
+      font-weight: 700;
+      font-size: 18px;
+      color: #5f6368;
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    &-name,
+    &-phone {
+      color: #000;
+      font-weight: 700;
+      font-size: 18px;
+      display: grid;
+      gap: 12px;
+
+      input {
+        background: #eee;
+        color: #5f6368;
+      }
+    }
+
+    &-birth {
+      color: #000;
+      display: flex;
+      gap: 10px;
+      font-weight: 700;
+
+      .p-checkbox-box {
+        background: #fff;
+      }
+    }
+
+    &-bonus {
+      background: #3ce46b;
+      color: rgba(17, 66, 0, 0.8);
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      text-wrap: balance;
+    }
+
+    &-btn {
+      width: 100%;
+      color: #fff;
+      text-align: center;
+      background: #3ce46b;
+      font-size: clamp(18px, 5vw, 24px);
+      border-radius: 15px;
+      font-weight: 700;
+      padding: 12px 0;
+      cursor: pointer;
+      margin-top: 24px;
+
+      &:disabled {
+        background: #acacac;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

@@ -1,0 +1,143 @@
+.restaurant {
+  width: 100%;
+  height: 100dvh;
+
+  @media (width >= 960px) {
+    min-height: 600px;
+  }
+
+  &__floors {
+    position: fixed;
+    top: 25%;
+    left: 6%;
+    list-style: disc;
+    padding-left: 40px;
+    display: grid;
+    gap: 10px;
+    transition: 0.4s;
+
+    @media (width <= 960px) {
+      left: -100%;
+
+      &.active {
+        left: 6%;
+      }
+    }
+
+    &-item {
+      color: #fff;
+      font-size: clamp(28px, 5vw, 40px);
+      opacity: 0.5;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.4s;
+
+      &.active {
+        font-size: clamp(36px, 5vw, 64px);
+        opacity: 1;
+      }
+    }
+  }
+
+  &__slide {
+    position: fixed;
+    bottom: 15px;
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-item {
+      cursor: pointer;
+      padding: 3px 12px;
+      border-radius: 30px;
+      border: 1px solid rgb(95, 99, 104);
+      background: white;
+      color: #5f6368;
+    }
+  }
+
+  &__date {
+    width: min(253px, 100%);
+    position: fixed;
+    top: 100px;
+    right: 24px;
+    display: grid;
+    gap: 20px;
+    transition: 0.4s;
+
+    @media (width <= 960px) {
+      right: unset;
+      top: 50%;
+      left: -100%;
+
+      &.active {
+        left: 30px;
+      }
+    }
+
+    &-item {
+      display: grid;
+      gap: 12px;
+
+      input {
+        font-size: 18px;
+        padding: 12px;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 700;
+      }
+    }
+
+    &-label {
+      font-weight: 700;
+    }
+
+    &-btn {
+      width: 100%;
+      color: #fff;
+      text-align: center;
+      background: #3ce46b;
+      font-size: clamp(16px, 5vw, 18px);
+      border-radius: 15px;
+      font-weight: 700;
+      padding: 10px 0;
+      cursor: pointer;
+
+      &[type="reset"] {
+        display: none;
+
+        @media (width <= 960px) {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.settings {
+  display: none;
+  @media (width <= 960px) {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: 700;
+    font-size: 32px;
+    position: fixed;
+    top: 100px;
+    left: 16px;
+    z-index: 100;
+    transition: 0.4s;
+
+    &.active {
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+}

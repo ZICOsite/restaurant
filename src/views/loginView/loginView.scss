@@ -1,0 +1,64 @@
+.login {
+  background: rgba(248, 248, 248, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+
+  &__content {
+    width: min(416px, 100%);
+    display: grid;
+    place-items: center;
+
+    &-logo {
+        margin-bottom: 20px;
+    }
+  }
+  
+  &__form {
+    display: grid;
+    gap: 30px;
+    width: 100%;
+
+    &-title {
+        color: #000;
+        text-align: center;
+    }
+
+    &-content {
+      background: #fff;
+      padding: 33px;
+      border-radius: 15px;
+      display: grid;
+      gap: 20px;
+    }
+
+    &-label {
+        display: grid;
+        gap: 20px;
+        color: #000;
+        font-weight: 700;
+        font-size: 24px;
+
+        input {
+            background: rgba(238, 238, 238, 1);
+            width: 100%;
+            color: #000;
+        }
+    }
+
+    &-btn {
+        padding: 12px;
+        border-radius: 15px;
+        color: #fff;
+        background: #3ce46b;
+        font-size: 24px;
+    }
+  }
+  
+  .errorMessage {
+    color: red;
+    text-align: center;
+    font-weight: 700;
+  }
+}

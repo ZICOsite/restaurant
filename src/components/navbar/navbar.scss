@@ -1,0 +1,56 @@
+.nav {
+  position: fixed;
+  width: 100%;
+  top: 40px;
+  z-index: 100;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__logo {
+    display: flex;
+    @media (width <= 680px) {
+      width: 50%;
+    }
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__link {
+    width: 253px;
+    background: #000;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 24px;
+    display: inline-block;
+    color: #fff;
+
+    @media (width <= 680px) {
+      display: none;
+    }
+  }
+
+  &__item {
+    &.nav__item_phone {
+      display: none;
+
+      @media (width <= 680px) {
+        display: flex;
+      }
+    }
+  }
+
+  &__icon {
+    display: flex;
+  }
+}
