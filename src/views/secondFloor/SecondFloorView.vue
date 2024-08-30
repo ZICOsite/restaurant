@@ -17,7 +17,7 @@ const router = useRouter();
 const tables = ref(null);
 
 const { send, status, data, close, open } = useWebSocket(
-  `ws://${import.meta.env.VITE_API_SERVER_URL}/ws/tables/?hall_number=1&floor=2`,
+  `wss://${import.meta.env.VITE_API_SERVER_URL}/ws/tables/?hall_number=1&floor=2`,
   {
     autoReconnect: {
       retries: 3,
