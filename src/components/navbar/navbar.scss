@@ -48,6 +48,10 @@
         display: flex;
       }
     }
+
+    &.nav__item_login {
+      cursor: pointer;
+    }
   }
 
   &__icon {

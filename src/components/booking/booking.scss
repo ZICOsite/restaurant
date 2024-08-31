@@ -80,9 +80,13 @@
       background: #eee;
       font-weight: 700;
       font-size: 18px;
-      color: #5f6368;
+      color: red;
       padding: 12px;
       border-radius: 10px;
+      
+      &.valid-time {
+        color: #5f6368;
+      }
     }
 
     &-name,

@@ -1,5 +1,7 @@
 <script setup>
 import { IconPhone, IconLogIn } from "@/helpers/icones";
+import { useAuthStore } from "@/stores/authStore";
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -16,6 +18,13 @@ import { IconPhone, IconLogIn } from "@/helpers/icones";
           <a href="tel:+998991080808" class="nav__icon">
             <IconPhone color="#fff" />
           </a>
+        </li>
+        <li
+          class="nav__item nav__item_login"
+          v-if="authStore.accessToken"
+          @click="authStore.login()"
+        >
+          <IconLogIn color="#fff" />
         </li>
       </ul>
     </div>

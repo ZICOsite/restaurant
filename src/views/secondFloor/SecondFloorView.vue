@@ -5,6 +5,7 @@ import { onUnmounted, watchEffect } from "vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
+import { useAuthStore } from "@/stores/authStore";
 
 const props = defineProps({
   active: Object,
@@ -12,6 +13,7 @@ const props = defineProps({
 });
 
 const tableStore = useTableStore();
+const authStore = useAuthStore();
 const router = useRouter();
 
 const tables = ref(null);
@@ -93,7 +95,7 @@ onUnmounted(() => {
             "
             :id="secondFloorDataSorted[index].id"
             v-tooltip="{
-              value: item.customer_name,
+              value: authStore.accessToken ? item.customer_name : '',
               dt: {
                 background: 'white',
                 color: 'black',
@@ -134,7 +136,13 @@ onUnmounted(() => {
             :width="26"
             :height="26"
             :id="secondFloorDataSorted[index].id"
-            :fill="secondFloorDataSorted[index][item.status]"
+            :fill="
+              secondFloorDataSorted[index]?.[
+                authStore.accessToken
+                  ? [item.special_event ? 'special_event' : item.status]
+                  : [item.status]
+              ]
+            "
           />
           <defs>
             <pattern

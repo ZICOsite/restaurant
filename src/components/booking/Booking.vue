@@ -30,10 +30,10 @@ const postBookTable = async (event) => {
   };
   bookInfoStore.getBookInfo(bookInfo);
   try {
-    const { data } = await postApi.postSMSNotification(
-      "authentication/send-confirmation-code/",
-      formatedPhone
-    );
+    // const { data } = await postApi.postSMSNotification(
+    //   "authentication/send-confirmation-code/",
+    //   formatedPhone
+    // );
     bookInfoStore.getSmsCode(data.confirmation_code);
     tableStore.getUserPhoneNumber(userPhone.value);
   } catch (error) {
@@ -66,6 +66,9 @@ const postBookTable = async (event) => {
                 v-model="startTime"
                 name="userTime"
                 required
+                :class="{
+                  'valid-time': startTime >= '12:00' && startTime < '23:30',
+                }"
               />
             </label>
           </div>
@@ -96,7 +99,12 @@ const postBookTable = async (event) => {
             Присоеденится к программе лояьности и получить 70 000 сум
           </p> -->
         </div>
-        <button class="booking__form-btn" :disabled="userPhone == ''">Подтвердить</button>
+        <button
+          class="booking__form-btn"
+          :disabled="userPhone == '' || startTime < '12:00' || startTime > '23:30'"
+        >
+          Подтвердить
+        </button>
       </form>
     </div>
   </Transition>

@@ -90,7 +90,7 @@ onUnmounted(() => {
             v-for="(item, index) in tables"
             :key="item.table_id"
             v-tooltip="{
-              value: item.customer_name,
+              value: authStore.accessToken ? item.customer_name : '',
               dt: {
                 background: 'white',
                 color: 'black',
