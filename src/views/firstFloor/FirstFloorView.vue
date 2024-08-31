@@ -89,6 +89,14 @@ onUnmounted(() => {
           <path
             v-for="(item, index) in tables"
             :key="item.table_id"
+            v-tooltip="{
+              value: item.customer_name,
+              dt: {
+                background: 'white',
+                color: 'black',
+                borderRadius: '20px',
+              },
+            }"
             :d="
               scene ? firstFloorDataSorted[index].path : firstFloorDataSorted[index].path2
             "

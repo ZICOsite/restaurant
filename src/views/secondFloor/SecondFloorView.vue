@@ -93,9 +93,7 @@ onUnmounted(() => {
             "
             :id="secondFloorDataSorted[index].id"
             v-tooltip="{
-              value: item.active_bookings_count
-                ? `Кол-во броней: ${item.active_bookings_count} `
-                : '',
+              value: item.customer_name,
               dt: {
                 background: 'white',
                 color: 'black',

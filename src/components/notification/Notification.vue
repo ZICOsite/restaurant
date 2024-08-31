@@ -2,10 +2,11 @@
 import { postApi } from "@/services/api";
 import { useBookInfoStore } from "@/stores/bookInfoStore";
 import { useTableStore } from "@/stores/tableStore";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const tableStore = useTableStore();
 const bookInfoStore = useBookInfoStore();
+const showCode = ref(false);
 
 const sms = ref("");
 const showSuccess = ref(false);
@@ -23,6 +24,12 @@ const postVerifyCode = async (code) => {
     if (code.length == 4) showError.value = true;
   }
 };
+
+onMounted(() => {
+  setTimeout(() => {
+    showCode.value = true;
+  }, 1500);
+});
 
 // const postVerifyCode = async (code) => {
 //   try {
@@ -60,6 +67,9 @@ const postVerifyCode = async (code) => {
           class="notification__content-input"
           @change="postVerifyCode(sms)"
         />
+        <p class="notification__content-code" v-if="showCode">
+          Ваш код: {{ bookInfoStore.smsCode }}
+        </p>
         <p class="notification__content-change" v-if="showError">
           Введён неправильный код
         </p>
