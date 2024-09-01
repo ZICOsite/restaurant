@@ -3,8 +3,8 @@
   padding: 0;
   box-sizing: border-box;
   // font-family: "CenturyGothic";
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans,
+    Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -126,13 +126,26 @@ button {
   background: rgba(0, 0, 0, 0.6);
 
   &__content {
-    border-radius: 15px;
     overflow: hidden;
     width: min(360px, 100%);
     display: grid;
 
+    &-close {
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: #000;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
     &-img {
       width: 100%;
+      border-radius: 15px 15px 0 0;
     }
 
     &-btn {
@@ -142,6 +155,7 @@ button {
       font-size: 24px;
       color: #fff;
       font-weight: 700;
+      border-radius: 0 0 15px 15px;
     }
   }
 }

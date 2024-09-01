@@ -3,6 +3,7 @@ import { postApi } from "@/services/api";
 import { useBookInfoStore } from "@/stores/bookInfoStore";
 import { useTableStore } from "@/stores/tableStore";
 import { onMounted, ref } from "vue";
+import { IconClose } from "@/helpers/icones";
 
 const tableStore = useTableStore();
 const bookInfoStore = useBookInfoStore();
@@ -30,31 +31,18 @@ onMounted(() => {
     showCode.value = true;
   }, 1500);
 });
-
-// const postVerifyCode = async (code) => {
-//   try {
-//     if (code.length == 4) {
-//       const { status } = await postApi.postVerifyCode(
-//         "authentication/verify-confirmation-code/",
-//         code,
-//         "998" + tableStore.userPhoneNumber.replace(/\D/g, "")
-//       );
-//       console.log(res);
-//       if (status === 200) {
-//         showSuccess.value = false;
-//       }
-//     }
-//   } catch ({ response }) {
-//     showSuccess.value = true;
-//     console.error(response.data.error);
-//   }
-// };
 </script>
 
 <template>
   <Transition name="notification">
     <div class="notification">
       <div class="notification__content" v-if="!showSuccess">
+        <span
+          class="notification__content-close"
+          @click="$emit('notification-close', false)"
+        >
+          <IconClose />
+        </span>
         <h2 class="notification__content-title">Введите код из СМС</h2>
         <p class="notification__content-txt">
           Мы отправили СМС с кодом на номер
