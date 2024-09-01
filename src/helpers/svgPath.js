@@ -1754,6 +1754,4 @@ const secondFloorDataSorted = secondFloorData.sort((a, b) => {
   return a.id - b.id;
 });
 
-// console.log(test);
-
 export { firstFloorDataSorted, secondFloorDataSorted };

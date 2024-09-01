@@ -11,7 +11,7 @@ const name = ref("");
 const password = ref("");
 const errorMessage = ref(false);
 
-const postToken = async () => {
+const userAuth = async () => {
   const userData = {
     username: name.value,
     password: password.value,
@@ -34,7 +34,7 @@ const postToken = async () => {
   <section class="login">
     <div class="login__content">
       <img src="@/assets/images/logo.svg" alt="" class="login__content-logo" />
-      <form action="" class="login__form" @submit.prevent="postToken">
+      <form action="" class="login__form" @submit.prevent="userAuth">
         <h2 class="login__form-title">Войти в профиль</h2>
         <div class="login__form-content">
           <label class="login__form-label">

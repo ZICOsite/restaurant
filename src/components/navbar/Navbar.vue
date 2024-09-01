@@ -20,9 +20,9 @@ const authStore = useAuthStore();
           </a>
         </li>
         <li
-          class="nav__item nav__item_login"
+          class="nav__item nav__item_logout"
           v-if="authStore.accessToken"
-          @click="authStore.login()"
+          @click="authStore.logout()"
         >
           <IconLogIn color="#fff" />
         </li>

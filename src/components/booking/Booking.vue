@@ -30,10 +30,10 @@ const postBookTable = async (event) => {
   };
   bookInfoStore.getBookInfo(bookInfo);
   try {
-    // const { data } = await postApi.postSMSNotification(
-    //   "authentication/send-confirmation-code/",
-    //   formatedPhone
-    // );
+    const { data } = await postApi.postSMSNotification(
+      "authentication/send-confirmation-code/",
+      formatedPhone
+    );
     bookInfoStore.getSmsCode(data.confirmation_code);
     tableStore.getUserPhoneNumber(userPhone.value);
   } catch (error) {
