@@ -4,6 +4,18 @@ const getApi = {
   getTable(url) {
     return axiosInstance.get(url);
   },
+  getBookingHistory(url) {
+    return axiosInstance.get(url);
+  },
+  getDashboard(url) {
+    return axiosInstance.get(url);
+  },
+  getHostessesList(url) {
+    return axiosInstance.get(url);
+  },
+  getHostesId(url) {
+    return axiosInstance.get(url);
+  },
 };
 
 const postApi = {
@@ -14,8 +26,6 @@ const postApi = {
       phone: data.phone,
       booking_datetime: data.booking_datetime,
       special_event: data.special_event,
-      email: data.email,
-      date_of_birth: data.date_of_birth,
     });
   },
   postSMSNotification(url, number) {
@@ -29,9 +39,45 @@ const postApi = {
       password: data.password,
     });
   },
-  postDeleteBooking(url) {
-    return axiosInstance.delete(url);
+  postHostesUser(url, data) {
+    return axiosInstance.post(url, {
+      username: data.username,
+      first_name: data.first_name,
+      phone_number: data.phone_number,
+      password: data.password,
+      last_name: data.last_name,
+    });
+  },
+  postRefreshToken(url, refresh) {
+    return axiosInstance.post(url, {
+      refresh: refresh
+    })
   }
 };
 
-export { getApi, postApi };
+const putApi = {
+  putBooking(url, status) {
+    return axiosInstance.put(url, {
+      status: status,
+    });
+  },
+};
+
+const patchApi = {
+  patchHostesUser(url, data) {
+    return axiosInstance.patch(url, {
+      first_name: data.first_name,
+      password: data.password,
+      phone_number: data.phone_number,
+      last_name: data.last_name,
+    });
+  },
+};
+
+const delApi = {
+  deleteHostesUser(url) {
+    return axiosInstance.delete(url);
+  },
+}
+
+export { getApi, postApi, putApi, patchApi, delApi };

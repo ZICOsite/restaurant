@@ -3,7 +3,7 @@ import FirstFloorView from "@/views/firstFloor/FirstFloorView.vue";
 import Modal from "@/components/modal/Modal.vue";
 import Booking from "@/components/booking/Booking.vue";
 import DatePicker from "primevue/datepicker";
-import { minDate, maxDate } from "@/helpers/currentDate";
+import { minDate, maxDate, formatDate } from "@/helpers/currentDate";
 import Notification from "@/components/notification/Notification.vue";
 import { IconArrowLeft, IconArrowRight, IconSettings } from "@/helpers/icones";
 import SecondFloorView from "@/views/secondFloor/SecondFloorView.vue";
@@ -22,6 +22,7 @@ const selectedChair = ref(null);
 const scene = ref(1);
 const floor = ref(1);
 const isActive = ref(false);
+const isHidden = ref(false);
 
 const date = ref();
 
@@ -37,10 +38,12 @@ const modalClose = (boolean) => {
 
 const bookingOpen = (boolean) => {
   isBooking.value = boolean;
+  isHidden.value = true;
 };
 
 const bookingClose = (boolean) => {
   isBooking.value = boolean;
+  isHidden.value = false;
 };
 
 const notificationOpen = (boolean) => {
@@ -58,23 +61,17 @@ const handleFloorChange = (value) => {
 const handleChangeSceneFront = () => (scene.value = 1);
 const handleChangeSceneBack = () => (scene.value = 0);
 
+const currentDate = new Date();
+
 const getFormatDate = () => {
-  tableStore.getDateISOFormat(
-    `${
-      date.value ? date.value.toLocaleDateString() : new Date().toLocaleDateString()
-    }, 12:00:00`
-  );
-  // const [day, month, year] = date.value.toLocaleDateString().split(".");
-  // tableStore.getDateISOFormat(new Date(`${year}-${month}-${day}T12:00`).toISOString());
+  tableStore.getDateFormat(formatDate(date.value ?? new Date()));
 };
 
 watchEffect(async () => {
   try {
-    let selectedDate = route.query.date || new Date().toLocaleDateString();
-    const [day, month, year] = selectedDate.split(".");
-    const formatedDate = `${year}-${month}-${day}`;
+    let selectedDate = route.query.date || formatDate(currentDate, "table-detail");
     const { data } = await getApi.getTable(
-      `table-detail/${route.query.id ?? 1}/?date=${formatedDate}`
+      `table-detail/${route.query.id ?? 1}/?date=${selectedDate}`
     );
     tableStore.getTable(data);
   } catch (error) {
@@ -83,7 +80,7 @@ watchEffect(async () => {
 });
 
 watch(date, (newDate) => {
-  tableStore.getDate(newDate.toLocaleDateString());
+  tableStore.getDate(formatDate(newDate));
 });
 </script>
 
@@ -138,9 +135,7 @@ watch(date, (newDate) => {
       :class="{ active: isActive }"
     >
       <div class="restaurant__date-item">
-        <label class="restaurant__date-label"
-          >Дата {{ tableStore.date || new Date().toLocaleDateString() }}
-        </label>
+        <label class="restaurant__date-label"> Дата {{ formatDate(currentDate) }} </label>
         <DatePicker
           inputClass="restaurant__date-date"
           v-model="date"
@@ -159,7 +154,11 @@ watch(date, (newDate) => {
         Закрыть
       </button>
     </form>
-    <span class="settings" @click="isActive = true" :class="{ active: isActive }">
+    <span
+      class="settings"
+      @click="isActive = true"
+      :class="{ active: isActive, hidden: isHidden }"
+    >
       <IconSettings />
     </span>
   </section>

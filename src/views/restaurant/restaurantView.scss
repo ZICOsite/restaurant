@@ -134,7 +134,7 @@
     z-index: 100;
     transition: 0.4s;
 
-    &.active {
+    &.active, &.hidden {
       opacity: 0;
       z-index: -1;
     }

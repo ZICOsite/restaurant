@@ -1,16 +1,35 @@
 <script setup>
-import { IconPhone, IconLogIn } from "@/helpers/icones";
+import { IconPhone, IconLogIn, IconPersonSearch, IconMenu } from "@/helpers/icones";
 import { useAuthStore } from "@/stores/authStore";
+import { useToast } from "primevue/usetoast";
+import Toast from "primevue/toast";
+
 const authStore = useAuthStore();
+
+const toast = useToast();
+
+const show = () => {
+  toast.add({
+    severity: "secondary",
+    summary: "Поиск",
+    detail: "Нажмите комбинацию CTRL + F",
+    life: 3000,
+  });
+};
 </script>
 
 <template>
   <div class="nav">
-    <div class="container">
+    <div class="nav__container">
       <RouterLink to="/" class="nav__logo">
         <img src="/logo.svg" alt="" />
       </RouterLink>
       <ul class="nav__list">
+        <li class="nav__item">
+          <a href="/bierregen-menu.pdf" class="nav__icon">
+            <IconMenu color="#fff" />
+          </a>
+        </li>
         <li class="nav__item">
           <a href="tel:+998991080808" class="nav__link">+998 99-108-08-08</a>
         </li>
@@ -22,11 +41,19 @@ const authStore = useAuthStore();
         <li
           class="nav__item nav__item_logout"
           v-if="authStore.accessToken"
+          @click="show()"
+        >
+          <IconPersonSearch />
+        </li>
+        <li
+          class="nav__item nav__item_logout"
+          v-if="authStore.accessToken"
           @click="authStore.logout()"
         >
           <IconLogIn color="#fff" />
         </li>
       </ul>
     </div>
+    <Toast position="top-center" />
   </div>
 </template>

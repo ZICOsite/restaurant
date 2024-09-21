@@ -3,6 +3,7 @@ import { postApi } from "@/services/api";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
+import { jwtDecode } from "jwt-decode";
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -18,9 +19,12 @@ const userAuth = async () => {
   };
   try {
     const { data } = await postApi.postToken("authentication/token/", userData);
-    authStore.login(data.access, data.refresh);
     errorMessage.value = false;
-    router.push("/?id=1");
+    const decoded = jwtDecode(data.access);
+    authStore.login(data.access, data.refresh);
+    authStore.setUser(decoded.username);
+    if (decoded.is_hostess) router.push("/?id=1");
+    else router.push("/admin");
   } catch (error) {
     console.error(error);
     errorMessage.value = true;

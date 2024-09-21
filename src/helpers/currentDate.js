@@ -16,4 +16,13 @@ minDate.value.setFullYear(prevYear);
 maxDate.value.setMonth(nextMonth);
 maxDate.value.setFullYear(nextYear);
 
-export { minDate, maxDate };
+function formatDate(date, tableDetail) {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Месяцы идут с 0, поэтому добавляем 1
+  const year = date.getFullYear();
+  
+  if (tableDetail == "table-detail") return `${year}-${month}-${day} 12:00:00`;
+  else return `${day}.${month}.${year}`;
+}
+
+export { minDate, maxDate, formatDate };

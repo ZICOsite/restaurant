@@ -5,3 +5,9 @@ export { default as IconArrowRight } from "@/components/icons/IconArrowRight.vue
 export { default as IconSettings } from "@/components/icons/IconSettings.vue";
 export { default as IconClose } from "@/components/icons/IconClose.vue";
 export { default as IconLocation } from "@/components/icons/IconLocation.vue";
+export { default as IconDashboard } from "@/components/icons/IconDashboard.vue";
+export { default as IconEvents } from "@/components/icons/IconEvents.vue";
+export { default as IconHistoryBooking } from "@/components/icons/IconHistoryBooking.vue";
+export { default as IconPersonSearch } from "@/components/icons/IconPersonSearch.vue";
+export { default as IconCake } from "@/components/icons/IconCake.vue";
+export { default as IconMenu } from "@/components/icons/IconMenu.vue";

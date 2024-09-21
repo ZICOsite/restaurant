@@ -6,6 +6,8 @@
 @import "@/components/modal/modal.scss";
 @import "@/components/booking/booking.scss";
 @import "@/components/notification/notification.scss";
+@import "@/components/dashboard/dashboard.scss";
+@import "@/components/sidebar/sidebar.scss";
 // components
 
 // views
@@ -13,4 +15,7 @@
 @import "@/views/firstFloor/firstFloorView.scss";
 @import "@/views/loginView/loginView.scss";
 @import "@/views/eventsView/eventsView.scss";
+@import "@/views/eventsView/eventsView.scss";
+@import "@/views/historyBookingView/historyBookingView.scss";
+@import "@/views/settingsView/settingsView.scss";
 // views

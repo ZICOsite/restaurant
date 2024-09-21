@@ -159,3 +159,65 @@ button {
     }
   }
 }
+
+.admin {
+  display: flex;
+  gap: 48px;
+
+  main {
+    flex-grow: 1;
+    padding: 30px 0;
+    margin: 0 100px 0 25rem;
+  }
+}
+
+.dialog {
+
+  &__top {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    span {
+      font-weight: 700;
+    }
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    justify-content: space-between;
+
+    &:nth-last-of-type(2) {
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: 600;
+    }
+  }
+
+  &__btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  display: grid;
+  place-items: center;
+
+  img {
+    width: 50vw;
+    height: 50vh;
+  }
+}

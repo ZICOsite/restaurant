@@ -4,6 +4,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     accessToken: localStorage.getItem("accessToken") || "",
     refreshToken: localStorage.getItem("refreshToken") || "",
+    user: null,
   }),
   actions: {
     login(accessToken, refreshToken) {
@@ -23,6 +24,14 @@ export const useAuthStore = defineStore("auth", {
     },
     logout() {
       this.clearTokens();
+      this.user = null;
+    },
+    setUser(data) {
+      this.user = data;
+    },
+    refreshToken(data) {
+      const { access } = data;
+      this.setTokens(access);
     },
   },
 });

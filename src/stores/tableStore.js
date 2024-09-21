@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useTableStore = defineStore("table", {
   state: () => ({
     table: null,
-    dateISOFormat: null,
+    dateFormat: null,
     date: null,
     userPhoneNumber: null,
   }),
@@ -11,8 +11,8 @@ export const useTableStore = defineStore("table", {
     getTable(data) {
       this.table = data;
     },
-    getDateISOFormat(date) {
-      this.dateISOFormat = date;
+    getDateFormat(date) {
+      this.dateFormat = `${date}, 12:00:00`;
     },
     getDate(date) {
       this.date = date;

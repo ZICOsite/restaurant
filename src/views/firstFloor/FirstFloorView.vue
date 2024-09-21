@@ -1,6 +1,6 @@
 <script setup>
-import { firstFloorDataSorted } from "@/helpers/svgPath";
-import { ref, onUnmounted, watchEffect, watch } from "vue";
+import { firstFloorData } from "@/helpers/svgPath";
+import { ref, onUnmounted, watchEffect } from "vue";
 import { useWebSocket } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
@@ -39,13 +39,11 @@ watchEffect(() => {
       console.error("Error parsing JSON data:", error);
     }
   }
-  if (tableStore.dateISOFormat) {
-    console.log(tableStore.dateISOFormat);
-
+  if (tableStore.dateFormat) {
     try {
       const filter = {
         action: "filter",
-        booking_datetime: tableStore.dateISOFormat,
+        booking_datetime: tableStore.dateFormat,
       };
       send(JSON.stringify(filter));
     } catch (error) {
@@ -65,12 +63,12 @@ onUnmounted(() => {
       <div class="floor__canvas-visual">
         <svg viewBox="0 0 1920 953" preserveAspectRatio="xMidYMid slice" class="mask">
           <image
-            v-if="scene === 1"
+            v-if="props.scene === 1"
             x="0"
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/1.webp"
+            xlink:href="@/assets/images/floor1/1-front.webp"
           ></image>
           <image
             v-else
@@ -78,7 +76,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/back.webp"
+            xlink:href="@/assets/images/floor1/1-back.webp"
           ></image>
           <rect
             width="100%"
@@ -90,24 +88,24 @@ onUnmounted(() => {
             v-for="(item, index) in tables"
             :key="item.table_id"
             v-tooltip="{
-              value: authStore.accessToken ? item.customer_name : '',
+              value: authStore.accessToken
+                ? `${item.customer_name ?? ''} ${item.customer_phone ?? ''}`
+                : null,
               dt: {
                 background: 'white',
                 color: 'black',
                 borderRadius: '20px',
               },
             }"
-            :d="
-              scene ? firstFloorDataSorted[index].path : firstFloorDataSorted[index].path2
-            "
-            :id="firstFloorDataSorted[index].id"
+            :d="props.scene ? firstFloorData[index].path : firstFloorData[index].path2"
+            :id="firstFloorData[index].id"
             fill="white"
             fill-opacity="0.5"
             @click="
               $emit('modal-open', true, item),
                 router.push({
                   query: {
-                    id: firstFloorDataSorted[index].id,
+                    id: firstFloorData[index].id,
                     date: tableStore.date,
                   },
                 })
@@ -122,27 +120,30 @@ onUnmounted(() => {
           <rect
             v-for="(item, index) in tables"
             :key="item.table_id"
-            :x="
-              scene
-                ? firstFloorDataSorted[index]?.rect.x
-                : firstFloorDataSorted[index]?.rect.x2
-            "
-            :y="
-              scene
-                ? firstFloorDataSorted[index]?.rect.y
-                : firstFloorDataSorted[index]?.rect.y2
-            "
-            :width="26"
-            :height="26"
-            :id="firstFloorDataSorted[index].id"
+            :x="scene ? firstFloorData[index]?.rect.x : firstFloorData[index]?.rect.x2"
+            :y="scene ? firstFloorData[index]?.rect.y : firstFloorData[index]?.rect.y2"
+            :width="38"
+            :height="38"
+            :id="firstFloorData[index].id"
             :fill="
-              firstFloorDataSorted[index]?.[
+              firstFloorData[index]?.[
                 authStore.accessToken
                   ? [item.special_event ? 'special_event' : item.status]
                   : [item.status]
               ]
             "
           />
+          <text
+            v-for="(item, index) in tables"
+            :x="scene ? firstFloorData[index]?.rect.x : firstFloorData[index]?.rect.x2"
+            :y="scene ? firstFloorData[index]?.rect.y : firstFloorData[index]?.rect.y2"
+            font-size="16"
+            fill="transparent"
+            pointer-events="none"
+          >
+            {{ item.customer_name }}
+            {{ item.customer_phone }}
+          </text>
           <defs>
             <pattern
               id="pattern0_284_4"

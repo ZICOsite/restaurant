@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
+import { postApi } from "./api";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -18,6 +19,23 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const authStore = useAuthStore();
+    if (error.response.status === 401) {
+      const { data } = await postApi.postRefreshToken(
+        "authentication/token/refresh/",
+        authStore.refreshToken
+      );
+      console.log(data);
+      authStore.refreshToken(data);
+    }
   }
 );
 

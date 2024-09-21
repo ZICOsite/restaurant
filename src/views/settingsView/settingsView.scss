@@ -1,0 +1,17 @@
+.admin-settings {
+
+}
+
+.admin-hostes {
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    &__title {
+        color: #000;
+    }
+}

@@ -4,7 +4,9 @@ import { useBookInfoStore } from "@/stores/bookInfoStore";
 import { useTableStore } from "@/stores/tableStore";
 import { onMounted, ref } from "vue";
 import { IconClose } from "@/helpers/icones";
+import { useAuthStore } from "@/stores/authStore";
 
+const authStore = useAuthStore();
 const tableStore = useTableStore();
 const bookInfoStore = useBookInfoStore();
 const showCode = ref(false);
@@ -55,7 +57,7 @@ onMounted(() => {
           class="notification__content-input"
           @change="postVerifyCode(sms)"
         />
-        <p class="notification__content-code" v-if="showCode">
+        <p class="notification__content-code" v-if="showCode && authStore.accessToken">
           Ваш код: {{ bookInfoStore.smsCode }}
         </p>
         <p class="notification__content-change" v-if="showError">
@@ -63,11 +65,14 @@ onMounted(() => {
         </p>
         <p class="notification__content-change" v-if="bookInfoStore.manyRequest">
           Пожалуйста, подождите, прежде чем запросить другой код.
+          <br />
+          <small style="color: dodgerblue">(Введите предыдущий код)</small>
         </p>
       </div>
       <Transition name="notification">
         <div class="notification__success" v-if="showSuccess">
           <h4 class="notification__success-title">Вы успешно забронировали место!</h4>
+          <img src="@/assets/images/prime-bonus.svg" alt="" />
           <RouterLink
             to="/?id=1"
             class="notification__success-link"

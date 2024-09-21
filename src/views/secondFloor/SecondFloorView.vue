@@ -1,8 +1,7 @@
 <script setup>
-import { secondFloorDataSorted } from "@/helpers/svgPath";
+import { secondFloorData } from "@/helpers/svgPath";
 import { useWebSocket } from "@vueuse/core";
-import { onUnmounted, watchEffect } from "vue";
-import { ref } from "vue";
+import { onUnmounted, watchEffect, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
 import { useAuthStore } from "@/stores/authStore";
@@ -40,11 +39,11 @@ watchEffect(() => {
       console.error("Error parsing JSON data:", error);
     }
   }
-  if (tableStore.dateISOFormat) {
+  if (tableStore.dateFormat) {
     try {
       const filter = {
         action: "filter",
-        booking_datetime: tableStore.dateISOFormat,
+        booking_datetime: tableStore.dateFormat,
       };
       send(JSON.stringify(filter));
     } catch (error) {
@@ -69,7 +68,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/1.webp"
+            xlink:href="@/assets/images/floor2/2-front.webp"
           ></image>
           <image
             v-else
@@ -77,7 +76,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/back.webp"
+            xlink:href="@/assets/images/floor2/2-back.webp"
           ></image>
           <rect
             width="100%"
@@ -88,14 +87,12 @@ onUnmounted(() => {
           <path
             v-for="(item, index) in tables"
             :key="item.id"
-            :d="
-              scene
-                ? secondFloorDataSorted[index].path
-                : secondFloorDataSorted[index].path2
-            "
-            :id="secondFloorDataSorted[index].id"
+            :d="scene ? secondFloorData[index].path : secondFloorData[index].path2"
+            :id="secondFloorData[index].id"
             v-tooltip="{
-              value: authStore.accessToken ? item.customer_name : '',
+              value: authStore.accessToken
+                ? `${item.customer_name ?? ''} ${item.customer_phone ?? ''}`
+                : null,
               dt: {
                 background: 'white',
                 color: 'black',
@@ -108,7 +105,7 @@ onUnmounted(() => {
               $emit('modal-open', true, item),
                 router.push({
                   query: {
-                    id: secondFloorDataSorted[index].id,
+                    id: secondFloorData[index].id,
                     date: tableStore.date,
                   },
                 })
@@ -123,27 +120,30 @@ onUnmounted(() => {
           <rect
             v-for="(item, index) in tables"
             :key="item.table_id"
-            :x="
-              scene
-                ? secondFloorDataSorted[index].rect.x
-                : secondFloorDataSorted[index].rect.x2
-            "
-            :y="
-              scene
-                ? secondFloorDataSorted[index].rect.y
-                : secondFloorDataSorted[index].rect.y2
-            "
-            :width="26"
-            :height="26"
-            :id="secondFloorDataSorted[index].id"
+            :x="scene ? secondFloorData[index].rect.x : secondFloorData[index].rect.x2"
+            :y="scene ? secondFloorData[index].rect.y : secondFloorData[index].rect.y2"
+            :width="38"
+            :height="38"
+            :id="secondFloorData[index].id"
             :fill="
-              secondFloorDataSorted[index]?.[
+              secondFloorData[index]?.[
                 authStore.accessToken
                   ? [item.special_event ? 'special_event' : item.status]
                   : [item.status]
               ]
             "
           />
+          <text
+            v-for="(item, index) in tables"
+            :x="scene ? secondFloorData[index]?.rect.x : secondFloorData[index]?.rect.x2"
+            :y="scene ? secondFloorData[index]?.rect.y : secondFloorData[index]?.rect.y2"
+            font-size="16"
+            fill="transparent"
+            pointer-events="none"
+          >
+            {{ item.customer_name }}
+            {{ item.customer_phone }}
+          </text>
           <defs>
             <pattern
               id="pattern0_284_4"

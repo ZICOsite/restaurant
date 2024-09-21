@@ -97,7 +97,7 @@
 
     &-change {
       color: red;
-      font-size: clamp(18px, 5vw, 24px);
+      font-size: 18px;
       font-weight: 700;
     }
 
@@ -108,17 +108,17 @@
   }
 
   &__success {
-    width: min(586px, 100%);
+    width: min(430px, 100%);
     display: grid;
     gap: 40px;
 
     &-title {
         color: #000;
-        font-size: clamp(24px, 5vw, 36px);
+        font-size: clamp(24px, 5vw, 28px);
         background: #fff;
         border-radius: 15px;
         text-align: center;
-        padding: 28px 0;
+        padding: 12px;
         text-wrap: balance;
     }
 

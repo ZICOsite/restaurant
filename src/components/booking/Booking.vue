@@ -1,9 +1,11 @@
 <script setup>
+import { formatDate } from "@/helpers/currentDate";
 import { postApi } from "@/services/api";
 import { useBookInfoStore } from "@/stores/bookInfoStore";
 import { useTableStore } from "@/stores/tableStore";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+
 const emit = defineEmits(["booking-close", "notification-open"]);
 
 const route = useRoute();
@@ -15,18 +17,18 @@ const userPhone = ref("");
 const startTime = ref("");
 const checked = ref(false);
 
+const currentDate = new Date();
+
 const postBookTable = async (event) => {
   const formatedPhone = "998" + userPhone.value.replace(/\D/g, "");
   const bookInfo = {
     table_id: +route.query.id,
     name: event.target.userName.value,
     phone: formatedPhone,
-    booking_datetime: `${tableStore.date || new Date().toLocaleDateString()}, ${
+    booking_datetime: `${tableStore.date || formatDate(currentDate)}, ${
       event.target.userTime.value
     }:00`,
     special_event: checked.value ? "True" : "False",
-    email: null,
-    date_of_birth: null,
   };
   bookInfoStore.getBookInfo(bookInfo);
   try {
@@ -88,16 +90,13 @@ const postBookTable = async (event) => {
               id="booking__form-phone"
               v-model="userPhone"
               mask="(99)999-99-99"
-              placeholder="+998 (xx) xxx-xx-xx"
+              placeholder="(__) __-__-__"
             />
           </div>
           <label class="booking__form-birth">
             <Checkbox v-model="checked" :binary="true" />
             Бронь в честь дня рождения
           </label>
-          <!-- <p class="booking__form-bonus">
-            Присоеденится к программе лояьности и получить 70 000 сум
-          </p> -->
         </div>
         <button
           class="booking__form-btn"
