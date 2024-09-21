@@ -23,6 +23,12 @@
     display: flex;
     align-items: center;
     gap: 16px;
+
+    &-menu {
+      background: #000 !important;
+      color: #fff !important;
+      border: none !important;
+    }
   }
 
   &__link {
@@ -35,13 +41,15 @@
     font-size: 24px;
     display: inline-block;
     color: #fff;
-
-    @media (width <= 680px) {
-      display: none;
-    }
   }
 
   &__item {
+
+    &:nth-of-type(2) {
+      @media (width <= 680px) {
+        display: none;
+      }
+    }
     &.nav__item_phone {
       display: none;
 
@@ -50,8 +58,14 @@
       }
     }
 
-    &.nav__item_logout {
+    &.nav__item_logout, &.nav__item_search {
       cursor: pointer;
+    }
+
+    &.nav__item_search {
+      @media (width <= 680px) {
+        display: none;
+      }
     }
   }
 

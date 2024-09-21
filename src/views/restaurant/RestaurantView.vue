@@ -69,7 +69,7 @@ const getFormatDate = () => {
 
 watchEffect(async () => {
   try {
-    let selectedDate = route.query.date || formatDate(currentDate, "table-detail");
+    let selectedDate = formatDate(date.value ?? currentDate, "table-detail");
     const { data } = await getApi.getTable(
       `table-detail/${route.query.id ?? 1}/?date=${selectedDate}`
     );
@@ -135,7 +135,7 @@ watch(date, (newDate) => {
       :class="{ active: isActive }"
     >
       <div class="restaurant__date-item">
-        <label class="restaurant__date-label"> Дата {{ formatDate(currentDate) }} </label>
+        <label class="restaurant__date-label"> Дата {{ formatDate(date ?? currentDate) }} </label>
         <DatePicker
           inputClass="restaurant__date-date"
           v-model="date"

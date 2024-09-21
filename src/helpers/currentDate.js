@@ -21,7 +21,7 @@ function formatDate(date, tableDetail) {
   const month = String(date.getMonth() + 1).padStart(2, "0"); // Месяцы идут с 0, поэтому добавляем 1
   const year = date.getFullYear();
   
-  if (tableDetail == "table-detail") return `${year}-${month}-${day} 12:00:00`;
+  if (tableDetail == "table-detail") return `${year}-${month}-${day}`;
   else return `${day}.${month}.${year}`;
 }
 

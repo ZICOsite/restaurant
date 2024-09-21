@@ -1,5 +1,10 @@
 <script setup>
-import { IconPhone, IconLogIn, IconPersonSearch, IconMenu } from "@/helpers/icones";
+import {
+  IconPhone,
+  IconLogIn,
+  IconPersonSearch,
+  IconMenu,
+} from "@/helpers/icones";
 import { useAuthStore } from "@/stores/authStore";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
@@ -26,9 +31,16 @@ const show = () => {
       </RouterLink>
       <ul class="nav__list">
         <li class="nav__item">
-          <a href="/bierregen-menu.pdf" class="nav__icon">
-            <IconMenu color="#fff" />
-          </a>
+          <Button
+            as="a"
+            label="Меню"
+            href="/bierregen-menu.pdf"
+            rel="noopener"
+            class="nav__list-menu"
+            target="_blank"
+          >
+            Меню <IconMenu />
+          </Button>
         </li>
         <li class="nav__item">
           <a href="tel:+998991080808" class="nav__link">+998 99-108-08-08</a>
@@ -39,11 +51,11 @@ const show = () => {
           </a>
         </li>
         <li
-          class="nav__item nav__item_logout"
+          class="nav__item nav__item_search"
           v-if="authStore.accessToken"
           @click="show()"
         >
-          <IconPersonSearch />
+          <IconPersonSearch color="#fff" />
         </li>
         <li
           class="nav__item nav__item_logout"

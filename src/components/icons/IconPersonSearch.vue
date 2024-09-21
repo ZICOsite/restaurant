@@ -1,13 +1,26 @@
+<script setup>
+const props = defineProps({
+  color: {
+    type: String,
+    default: "currentColor",
+  },
+  size: {
+    type: Number,
+    default: 32,
+  },
+});
+</script>
+
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="32"
-    height="32"
+    :width="size"
+    :height="size"
     viewBox="0 0 24 24"
   >
     <mask id="lineMdPersonSearch0">
       <g stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-        <g fill="none" stroke="#fff">
+        <g fill="none" :stroke="color">
           <path
             stroke-dasharray="20"
             stroke-dashoffset="20"
@@ -47,7 +60,7 @@
         </circle>
         <path
           fill="none"
-          stroke="#fff"
+          :stroke="color"
           stroke-dasharray="26"
           stroke-dashoffset="26"
           d="M16 19C14.34 19 13 17.66 13 16C13 14.34 14.34 13 16 13C 17.66 13 19 14.34 19 16C19 17.66 17.66 19 16 19v4"
@@ -66,7 +79,7 @@
     <rect
       width="24"
       height="24"
-      fill="currentColor"
+      :fill="color"
       mask="url(#lineMdPersonSearch0)"
     />
   </svg>
