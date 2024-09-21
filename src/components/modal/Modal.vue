@@ -128,7 +128,7 @@ const statusBooking = (id, status) => {
             </p>
             <p
               class="modal__form-customer"
-              v-if="tableStore.table?.table_info[0]"
+              v-if="authStore.accessToken && tableStore.table?.table_info[0]"
             >
               <span v-if="tableStore.table?.table_info[0].special_event">
                 <IconCake />
