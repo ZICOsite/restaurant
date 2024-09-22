@@ -9,6 +9,8 @@
   padding: 25px;
   background: rgba(0, 0, 0, 0.6);
   transition: 0.4s;
+  z-index: 200;
+  overflow: auto;
 
   &-enter-active,
   &-leave-active {

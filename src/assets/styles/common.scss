@@ -124,6 +124,8 @@ button {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.6);
+  padding: 30px 0;
+  overflow: auto;
 
   &__content {
     overflow: hidden;

@@ -14,7 +14,7 @@ const bookInfoStore = useBookInfoStore();
 
 const userName = ref("");
 const userPhone = ref("");
-const startTime = ref("");
+const startTime = ref(new Date().toLocaleTimeString().slice(0, -3));
 const checked = ref(false);
 
 const currentDate = new Date();
@@ -61,7 +61,7 @@ const postBookTable = async (event) => {
           </p>
           <div class="booking__form-time">
             <label class="booking__form-label">
-              Выберите время посещение
+              Выберите время посещения
               <input
                 type="time"
                 class="booking__form-input"
