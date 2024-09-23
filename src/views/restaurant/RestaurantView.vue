@@ -5,7 +5,7 @@ import Booking from "@/components/booking/Booking.vue";
 import DatePicker from "primevue/datepicker";
 import { minDate, maxDate, formatDate } from "@/helpers/currentDate";
 import Notification from "@/components/notification/Notification.vue";
-import { IconArrowLeft, IconArrowRight, IconSettings } from "@/helpers/icones";
+import { IconArrowLeft, IconArrowRight } from "@/helpers/icones";
 import SecondFloorView from "@/views/secondFloor/SecondFloorView.vue";
 import { getApi } from "@/services/api";
 import { useTableStore } from "@/stores/tableStore";
@@ -99,13 +99,20 @@ watch(date, (newDate) => {
       :selected-chair="selectedChair"
       :scene="scene"
     />
-    <Modal v-if="isModal" @modal-close="modalClose" @booking-open="bookingOpen" />
+    <Modal
+      v-if="isModal"
+      @modal-close="modalClose"
+      @booking-open="bookingOpen"
+    />
     <Booking
       v-show="isBooking"
       @booking-close="bookingClose"
       @notification-open="notificationOpen"
     />
-    <Notification v-if="isNotification" @notification-close="notificationClose" />
+    <Notification
+      v-if="isNotification"
+      @notification-close="notificationClose"
+    />
     <ul class="restaurant__floors" :class="{ active: isActive }">
       <li
         :class="['restaurant__floors-item', { active: floor === 1 }]"
@@ -135,7 +142,9 @@ watch(date, (newDate) => {
       :class="{ active: isActive }"
     >
       <div class="restaurant__date-item">
-        <label class="restaurant__date-label"> Дата {{ formatDate(date ?? currentDate) }} </label>
+        <label class="restaurant__date-label">
+          Дата {{ formatDate(date ?? currentDate) }}
+        </label>
         <DatePicker
           inputClass="restaurant__date-date"
           v-model="date"
@@ -150,7 +159,11 @@ watch(date, (newDate) => {
         />
       </div>
       <button class="restaurant__date-btn">Просмотр</button>
-      <button class="restaurant__date-btn" type="reset" @click="isActive = false">
+      <button
+        class="restaurant__date-btn"
+        type="reset"
+        @click="isActive = false"
+      >
         Закрыть
       </button>
     </form>
@@ -159,7 +172,7 @@ watch(date, (newDate) => {
       @click="isActive = true"
       :class="{ active: isActive, hidden: isHidden }"
     >
-      <IconSettings />
+      <i class="pi pi-calendar-clock"></i>
     </span>
   </section>
 </template>
