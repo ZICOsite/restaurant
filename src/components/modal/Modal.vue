@@ -101,7 +101,7 @@ const statusBooking = (id, status) => {
 <template>
   <Transition name="modal">
     <div class="modal" @click="$emit('modal-close', false)">
-      <div class="modal__content container">
+      <div class="modal__content">
         <div class="modal__form" @click.stop>
           <div class="modal__form-item">
             <p class="modal__form-txt">

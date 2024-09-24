@@ -1,6 +1,5 @@
 <script setup>
 import {
-  IconPhone,
   IconLogIn,
   IconPersonSearch,
   IconMenu,
@@ -8,8 +7,12 @@ import {
 import { useAuthStore } from "@/stores/authStore";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
+import { onMounted, ref } from "vue";
+import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
 
 const authStore = useAuthStore();
+const swipeSceneStore = useSwipeSceneStore()
+const scene = ref(false)
 
 const toast = useToast();
 
@@ -21,13 +24,23 @@ const show = () => {
     life: 3000,
   });
 };
+
+const changeScene = () => {
+  scene.value = !scene.value
+  swipeSceneStore.changeScene(scene.value ? 1 : 0)
+}
+
+onMounted(() => {
+  calendar.addEventListener("click", () => restaurantDate.classList.toggle("active"))
+})
+
 </script>
 
 <template>
-  <div class="nav">
+  <nav class="nav">
     <div class="nav__container">
       <RouterLink to="/" class="nav__logo">
-        <img src="/logo.svg" alt="" />
+        <img src="@/assets/images/logo.svg" alt="Bier Regen logo" width="90" />
       </RouterLink>
       <ul class="nav__list">
         <li class="nav__item">
@@ -44,11 +57,6 @@ const show = () => {
         </li>
         <li class="nav__item">
           <a href="tel:+998991080808" class="nav__link">+998 99-108-08-08</a>
-        </li>
-        <li class="nav__item nav__item_phone">
-          <a href="tel:+998991080808" class="nav__icon">
-            <IconPhone color="#fff" />
-          </a>
         </li>
         <li
           class="nav__item nav__item_search"
@@ -67,5 +75,34 @@ const show = () => {
       </ul>
     </div>
     <Toast position="top-center" />
-  </div>
+  </nav>
+  <nav class="nav-mobile">
+    <ul class="nav-mobile__list">
+      <li class="nav-mobile__item" id="calendar">
+        <i style="color: #000; font-size: 1.3rem" class="pi pi-calendar"></i>
+      </li>
+      <li class="nav-mobile__item" @click="changeScene">
+        <i
+          style="color: #000; font-size: 1.3rem"
+          class="pi pi-arrow-right-arrow-left"
+        ></i>
+      </li>
+      <li class="nav-mobile__logo">
+        <img src="@/assets/images/logo.svg" alt="" width="90" />
+      </li>
+      <li class="nav-mobile__item">
+        <a href="/bierregen-menu.pdf" target="_blank">
+          <i
+            style="color: #000; font-size: 1.3rem"
+            class="pi pi-list-check"
+          ></i>
+        </a>
+      </li>
+      <li class="nav-mobile__item">
+        <a href="tel:+998991080808">
+          <i style="color: #000; font-size: 1.3rem" class="pi pi-phone"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>

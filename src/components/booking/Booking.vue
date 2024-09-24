@@ -16,6 +16,7 @@ const userName = ref("");
 const userPhone = ref("");
 const startTime = ref(new Date().toLocaleTimeString().slice(0, -3));
 const checked = ref(false);
+const personalData = ref(true);
 
 const currentDate = new Date();
 
@@ -58,6 +59,7 @@ const postBookTable = async (event) => {
         <div class="booking__form-content">
           <p class="booking__form-date">
             Дата: {{ tableStore.date || new Date().toLocaleDateString() }}
+            <i class="pi pi-calendar"></i>
           </p>
           <div class="booking__form-time">
             <label class="booking__form-label">
@@ -69,7 +71,7 @@ const postBookTable = async (event) => {
                 name="userTime"
                 required
                 :class="{
-                  'valid-time': startTime >= '12:00' && startTime < '23:30',
+                  'valid-time': startTime >= '12:00' && startTime < '23:00',
                 }"
               />
             </label>
@@ -90,17 +92,26 @@ const postBookTable = async (event) => {
               id="booking__form-phone"
               v-model="userPhone"
               mask="(99)999-99-99"
-              placeholder="(__) __-__-__"
+              placeholder="(99) 999-99-99"
             />
           </div>
           <label class="booking__form-birth">
             <Checkbox v-model="checked" :binary="true" />
             Бронь в честь дня рождения
           </label>
+          <label class="booking__form-personal">
+            <Checkbox v-model="personalData" :binary="true" />
+            <span>
+              Я даю согласие на обработку моих <br />
+              <u style="color: red">персональных данных</u>
+            </span>
+          </label>
         </div>
         <button
           class="booking__form-btn"
-          :disabled="userPhone == '' || startTime < '12:00' || startTime > '23:30'"
+          :disabled="
+            userPhone == '' || startTime < '12:00' || startTime > '23:30'
+          "
         >
           Подтвердить
         </button>

@@ -2,9 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  // font-family: "CenturyGothic";
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans,
-    Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: "ProductSans";
+  -webkit-tap-highlight-color: transparent;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -156,7 +155,7 @@ button {
       text-align: center;
       font-size: 24px;
       color: #fff;
-      font-weight: 700;
+      font-weight: 500;
       border-radius: 0 0 15px 15px;
     }
   }
@@ -165,6 +164,11 @@ button {
 .admin {
   display: flex;
   gap: 48px;
+
+  * {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans,
+    Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  }
 
   main {
     flex-grow: 1;
@@ -180,7 +184,7 @@ button {
     align-items: center;
 
     span {
-      font-weight: 700;
+      font-weight: 500;
     }
   }
 
@@ -254,7 +258,7 @@ button {
     a,
     button {
       font-size: clamp(18px, 3vw, 48px);
-      font-weight: 700;
+      font-weight: 500;
       padding: 10px 20px;
       text-transform: uppercase;
 

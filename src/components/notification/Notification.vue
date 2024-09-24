@@ -48,7 +48,7 @@ onMounted(() => {
         <h2 class="notification__content-title">Введите код из СМС</h2>
         <p class="notification__content-txt">
           Мы отправили СМС с кодом на номер
-          <span>{{ "998" + tableStore.userPhoneNumber }}</span>
+          <span>{{ tableStore.userPhoneNumber ? "998" + tableStore.userPhoneNumber : 'Подождите 2 минуты' }}</span>
         </p>
         <InputOtp
           v-model="sms"
@@ -64,15 +64,13 @@ onMounted(() => {
           Введён неправильный код
         </p>
         <p class="notification__content-change" v-if="bookInfoStore.manyRequest">
-          Пожалуйста, подождите, прежде чем запросить другой код.
-          <br />
-          <small style="color: dodgerblue">(Введите предыдущий код)</small>
+          Пожалуйста, подождите 2 минуты, прежде чем запросить другой код.
         </p>
       </div>
       <Transition name="notification">
         <div class="notification__success" v-if="showSuccess">
           <h4 class="notification__success-title">Вы успешно забронировали место!</h4>
-          <img src="@/assets/images/prime-bonus.svg" alt="" />
+          <img src="@/assets/images/prime-bonus.svg" alt="QR code" class="notification__success-qr" />
           <RouterLink
             to="/?id=1"
             class="notification__success-link"

@@ -14,7 +14,7 @@ onMounted(() => {
 
 <template>
   <div class="preloader" v-if="preloader">
-    <img src="@/assets/images/logo-black.svg" alt="" />
+    <img src="/logo-fav.svg" alt="" />
   </div>
   <div class="board" v-if="board">
     <div>

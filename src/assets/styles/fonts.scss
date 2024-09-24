@@ -1,10 +1,10 @@
-$CenturyGothic: ("Bold", 700), ("Regular", 400);
+$ProductSans: ("Medium", 500), ("Regular", 400), ("Light", 300);
 
-@each $name, $weight in $CenturyGothic {
+@each $name, $weight in $ProductSans {
   @font-face {
-    src: url(@/assets/fonts/Century-Gothic/CenturyGothic-#{$name}.woff2)
+    src: url(@/assets/fonts/ProductSans/ProductSans-#{$name}.woff2)
       format("woff2");
-    font-family: "CenturyGothic";
+    font-family: "ProductSans";
     font-weight: $weight;
     font-style: normal;
     font-display: swap;

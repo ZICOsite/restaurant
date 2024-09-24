@@ -4,6 +4,10 @@
   top: 40px;
   z-index: 100;
 
+  @media (width <= 960px) {
+    display: none;
+  }
+
   &__container {
     display: flex;
     justify-content: space-between;
@@ -15,8 +19,11 @@
 
   &__logo {
     display: flex;
-    @media (width <= 680px) {
-      width: 50%;
+    background: #fff;
+    border-radius: 50%;
+    
+    img {
+      padding: 2px;
     }
   }
 
@@ -38,7 +45,7 @@
     padding: 10px 0;
     text-align: center;
     border-radius: 15px;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 24px;
     display: inline-block;
     color: #fff;
@@ -72,5 +79,41 @@
 
   &__icon {
     display: flex;
+  }
+}
+
+.nav-mobile {
+  display: none;
+  @media (width <= 960px) {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    background: #fff;
+    width: 100%;
+    padding: 24px 30px;
+  
+    &__list {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+  
+    &__item:nth-of-type(2) {
+      margin-right: auto;
+    }
+    &__item:nth-of-type(4) {
+      margin-left: auto;
+    }
+  
+    &__logo {
+      background: #fff;
+      padding: 2px;
+      border-radius: 50%;
+      position: absolute;
+      top: -45px;
+    }
   }
 }

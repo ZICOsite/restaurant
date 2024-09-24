@@ -9,20 +9,20 @@ import { IconArrowLeft, IconArrowRight } from "@/helpers/icones";
 import SecondFloorView from "@/views/secondFloor/SecondFloorView.vue";
 import { getApi } from "@/services/api";
 import { useTableStore } from "@/stores/tableStore";
-import { ref, watch, watchEffect } from "vue";
+import { onMounted, ref, watch, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
 
 const tableStore = useTableStore();
 const route = useRoute();
+const swipeSceneStore = useSwipeSceneStore()
 
 const isModal = ref(false);
 const isBooking = ref(false);
 const isNotification = ref(false);
 const selectedChair = ref(null);
-const scene = ref(1);
+// const scene = ref(1);
 const floor = ref(1);
-const isActive = ref(false);
-const isHidden = ref(false);
 
 const date = ref();
 
@@ -38,12 +38,10 @@ const modalClose = (boolean) => {
 
 const bookingOpen = (boolean) => {
   isBooking.value = boolean;
-  isHidden.value = true;
 };
 
 const bookingClose = (boolean) => {
   isBooking.value = boolean;
-  isHidden.value = false;
 };
 
 const notificationOpen = (boolean) => {
@@ -58,14 +56,17 @@ const handleFloorChange = (value) => {
   floor.value = value;
 };
 
-const handleChangeSceneFront = () => (scene.value = 1);
-const handleChangeSceneBack = () => (scene.value = 0);
+const handleChangeSceneFront = () => (swipeSceneStore.changeScene(1));
+const handleChangeSceneBack = () => (swipeSceneStore.changeScene(0));
 
 const currentDate = new Date();
 
 const getFormatDate = () => {
   tableStore.getDateFormat(formatDate(date.value ?? new Date()));
+  restaurantDate.classList.remove("active")
 };
+
+const closeForm = () => restaurantDate.classList.remove("active")
 
 watchEffect(async () => {
   try {
@@ -82,6 +83,8 @@ watchEffect(async () => {
 watch(date, (newDate) => {
   tableStore.getDate(formatDate(newDate));
 });
+
+onMounted(() => closeForm())
 </script>
 
 <template>
@@ -89,7 +92,7 @@ watch(date, (newDate) => {
     <FirstFloorView
       v-if="floor === 1"
       @modal-open="modalOpen"
-      :scene="scene"
+      :scene="swipeSceneStore.scene"
       :active="selectedChair"
     />
     <SecondFloorView
@@ -97,7 +100,7 @@ watch(date, (newDate) => {
       @modal-open="modalOpen"
       :active="selectedChair"
       :selected-chair="selectedChair"
-      :scene="scene"
+      :scene="swipeSceneStore.scene"
     />
     <Modal
       v-if="isModal"
@@ -113,7 +116,7 @@ watch(date, (newDate) => {
       v-if="isNotification"
       @notification-close="notificationClose"
     />
-    <ul class="restaurant__floors" :class="{ active: isActive }">
+    <ul class="restaurant__floors">
       <li
         :class="['restaurant__floors-item', { active: floor === 1 }]"
         @click="handleFloorChange(1)"
@@ -126,6 +129,7 @@ watch(date, (newDate) => {
       >
         2 Этаж
       </li>
+      <li class="restaurant__floors-glider" :class="{active: floor === 2}"></li>
     </ul>
     <div class="restaurant__slide">
       <span class="restaurant__slide-item" @click="handleChangeSceneFront">
@@ -139,11 +143,11 @@ watch(date, (newDate) => {
     <form
       class="restaurant__date"
       @submit.prevent="getFormatDate"
-      :class="{ active: isActive }"
+      id="restaurantDate"
     >
       <div class="restaurant__date-item">
         <label class="restaurant__date-label">
-          Дата {{ formatDate(date ?? currentDate) }}
+          Сегодня: {{ formatDate(currentDate) }}
         </label>
         <DatePicker
           inputClass="restaurant__date-date"
@@ -152,27 +156,20 @@ watch(date, (newDate) => {
           fluid
           iconDisplay="input"
           :manualInput="false"
-          placeholder="Выберите дату"
+          placeholder="Выберите дату брони"
           :minDate="minDate"
           :maxDate="maxDate"
           dateFormat="dd.mm.yy"
         />
       </div>
-      <button class="restaurant__date-btn">Просмотр</button>
+      <button class="restaurant__date-btn">Просмотреть</button>
       <button
         class="restaurant__date-btn"
         type="reset"
-        @click="isActive = false"
+        @click="closeForm"
       >
         Закрыть
       </button>
     </form>
-    <span
-      class="settings"
-      @click="isActive = true"
-      :class="{ active: isActive, hidden: isHidden }"
-    >
-      <i class="pi pi-calendar-clock"></i>
-    </span>
   </section>
 </template>

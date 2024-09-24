@@ -9,6 +9,7 @@
   padding: 25px;
   background: rgba(0, 0, 0, 0.6);
   overflow: auto;
+  z-index: 150;
   transition: 0.4s;
 
   &-enter-active,
@@ -33,11 +34,14 @@
     }
 
     &-date {
-      background: #eee !important;
       color: #5f6368 !important;
-      font-weight: 700;
+      font-weight: 500;
       padding: 10px;
       border-radius: 8px;
+      border: 1px solid rgb(212, 212, 212);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     // &-list {
@@ -48,7 +52,7 @@
 
     &-item {
       color: red;
-      font-weight: 700;
+      font-weight: 500;
       padding: 10px;
       font-size: clamp(14px, 2vw, 18px);
 
@@ -60,13 +64,12 @@
     &-time {
       display: flex;
       gap: 30px;
-      justify-content: center;
     }
 
     &-label {
-      font-weight: 700;
+      font-weight: 500;
       font-size: 18px;
-      color: #000;
+      color: rgb(109, 109, 109);
       display: flex;
       align-items: center;
       gap: 14px;
@@ -77,29 +80,37 @@
     }
 
     &-input {
-      background: #eee;
-      font-weight: 700;
+      background: rgb(255, 230, 230);
+      font-weight: 500;
       font-size: 18px;
       color: red;
       padding: 12px;
-      border-radius: 10px;
+      border-radius: 15px;
+      border: 1px solid rgb(255, 129, 129);
       
       &.valid-time {
-        color: #5f6368;
+        color: rgb(40, 181, 80);
+        background: rgb(228, 255, 235);
+        border: 1px solid rgb(40, 181, 80);
+
+        &::-webkit-calendar-picker-indicator {
+          mix-blend-mode: exclusion;
+        }
       }
     }
 
     &-name,
     &-phone {
-      color: #000;
-      font-weight: 700;
+      color: rgb(109, 109, 109);
+      font-weight: 500;
       font-size: 18px;
       display: grid;
       gap: 12px;
 
       input {
-        background: #eee;
+        background: rgba(243, 244, 246, 1);
         color: #5f6368;
+        border: 1px solid rgb(212, 212, 212);
       }
     }
 
@@ -120,24 +131,29 @@
       }
     }
 
-    &-birth {
-      color: #000;
+    &-birth, &-personal {
+      color: rgb(109, 109, 109);
       display: flex;
       gap: 10px;
-      font-weight: 700;
+      font-weight: 500;
+      cursor: pointer;
 
       .p-checkbox-box {
         background: #fff;
       }
     }
 
+    &-personal {
+      color: rgb(109, 109, 109);
+    }
+
     &-bonus {
       background: #3ce46b;
       color: rgba(17, 66, 0, 0.8);
       padding: 10px;
-      border-radius: 10px;
+      border-radius: 15px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 500;
       text-wrap: balance;
     }
 
@@ -148,7 +164,7 @@
       background: #3ce46b;
       font-size: clamp(18px, 5vw, 24px);
       border-radius: 15px;
-      font-weight: 700;
+      font-weight: 500;
       padding: 12px 0;
       cursor: pointer;
       margin-top: 24px;
