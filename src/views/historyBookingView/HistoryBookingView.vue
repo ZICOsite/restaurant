@@ -19,14 +19,23 @@ const selectedStatus = ref();
 const statuses = [
   {
     name: "booked",
+    translate: "забронировано"
   },
   {
     name: "cancelled",
+    translate: "отменено"
   },
   {
     name: "completed",
+    translate: "завершено"
   },
 ];
+
+const actions = {
+  booked: "забронировано",
+  cancelled: "отменено",
+  completed: "завершено",
+}
 
 const getSeverity = (status) => {
   switch (status) {
@@ -88,14 +97,14 @@ watchDebounced(
       <Select
         v-model="selectedStatus"
         :options="statuses"
-        optionLabel="name"
+        optionLabel="translate"
         placeholder="Выберите статус брони"
         class="history__top-select"
         showClear
       >
         <template #option="slotProps">
           <Tag
-            :value="slotProps.option.name"
+            :value="slotProps.option.translate"
             :severity="getSeverity(slotProps.option.name)"
           />
         </template>
@@ -145,7 +154,7 @@ watchDebounced(
         ></Column>
         <Column field="" header="Статус" style="width: 5%">
           <template #body="{ data }">
-            <Tag :value="data.status" :severity="getSeverity(data.status)" />
+            <Tag :value="actions[data.status]" :severity="getSeverity(data.status)" />
           </template>
         </Column>
       </DataTable>
