@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import { postApi } from "./api";
+import router from '@/router';
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -33,8 +34,8 @@ axiosInstance.interceptors.response.use(
         "authentication/token/refresh/",
         authStore.refreshToken
       );
-      console.log(data);
-      authStore.refreshToken(data);
+      authStore.setRefreshToken(data.access);
+      router.push('/login');
     }
   }
 );

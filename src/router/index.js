@@ -79,7 +79,7 @@ router.beforeEach((to, from, next) => {
   try {
     decodedToken = jwtDecode(authStore.accessToken);
   } catch (error) {
-    // console.error("Invalid token:", error);
+    console.error("Invalid token:", error);
   }
 
   if (to.meta.authAdmin && !decodedToken?.is_superuser) {

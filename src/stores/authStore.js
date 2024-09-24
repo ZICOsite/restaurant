@@ -29,7 +29,7 @@ export const useAuthStore = defineStore("auth", {
     setUser(data) {
       this.user = data;
     },
-    refreshToken(data) {
+    setRefreshToken(data) {
       const { access } = data;
       this.setTokens(access);
     },
