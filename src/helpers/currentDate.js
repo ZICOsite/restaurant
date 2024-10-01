@@ -3,10 +3,12 @@ import { ref } from "vue";
 let today = new Date();
 let month = today.getMonth();
 let year = today.getFullYear();
-let prevMonth = month === 0 ? 11 : month;
+let prevMonth = month === 0 ? 11 : month - 1; // исправил на month - 1
 let prevYear = prevMonth === 11 ? year - 1 : year;
-let nextMonth = month === 11 ? 0 : month + 3;
-let nextYear = nextMonth === 0 ? year + 1 : year;
+let nextDate = new Date(today); // создаем новую дату для вычисления через 3 месяца
+nextDate.setMonth(month + 3); // корректное вычисление следующего месяца и года
+let nextMonth = nextDate.getMonth();
+let nextYear = nextDate.getFullYear();
 
 const minDate = ref(new Date());
 const maxDate = ref(new Date());

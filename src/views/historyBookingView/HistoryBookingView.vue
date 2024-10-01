@@ -14,7 +14,7 @@ const countHistory = ref(0);
 const loading = ref(true);
 
 const first = ref(0);
-const customer = ref();
+const customer = ref("");
 const selectedStatus = ref();
 const statuses = [
   {

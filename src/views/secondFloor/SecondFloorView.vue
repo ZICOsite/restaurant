@@ -140,9 +140,19 @@ onUnmounted(() => {
             font-size="16"
             fill="transparent"
             pointer-events="none"
+            text-anchor="middle"
           >
-            {{ item.customer_name }}
-            {{ item.customer_phone }}
+          <tspan style="text-transform: capitalize;">{{ item.customer_name }}</tspan>
+            <tspan
+              :x="
+                scene
+                  ? secondFloorData[index]?.rect.x
+                  : secondFloorData[index]?.rect.x2
+              "
+              dy="1rem"
+            >
+              {{ item.customer_phone }}
+            </tspan>
           </text>
           <defs>
             <pattern

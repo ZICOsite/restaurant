@@ -61,7 +61,11 @@ onUnmounted(() => {
   <div class="floor">
     <div class="floor__canvas">
       <div class="floor__canvas-visual">
-        <svg viewBox="0 0 1920 953" preserveAspectRatio="xMidYMid slice" class="mask">
+        <svg
+          viewBox="0 0 1920 953"
+          preserveAspectRatio="xMidYMid slice"
+          class="mask"
+        >
           <image
             v-if="props.scene === 1"
             x="0"
@@ -97,7 +101,11 @@ onUnmounted(() => {
                 borderRadius: '20px',
               },
             }"
-            :d="props.scene ? firstFloorData[index].path : firstFloorData[index].path2"
+            :d="
+              props.scene
+                ? firstFloorData[index].path
+                : firstFloorData[index].path2
+            "
             :id="firstFloorData[index].id"
             fill="white"
             fill-opacity="0.5"
@@ -120,8 +128,16 @@ onUnmounted(() => {
           <rect
             v-for="(item, index) in tables"
             :key="item.table_id"
-            :x="scene ? firstFloorData[index]?.rect.x : firstFloorData[index]?.rect.x2"
-            :y="scene ? firstFloorData[index]?.rect.y : firstFloorData[index]?.rect.y2"
+            :x="
+              scene
+                ? firstFloorData[index]?.rect.x
+                : firstFloorData[index]?.rect.x2
+            "
+            :y="
+              scene
+                ? firstFloorData[index]?.rect.y
+                : firstFloorData[index]?.rect.y2
+            "
             :width="38"
             :height="38"
             :id="firstFloorData[index].id"
@@ -135,14 +151,32 @@ onUnmounted(() => {
           />
           <text
             v-for="(item, index) in tables"
-            :x="scene ? firstFloorData[index]?.rect.x : firstFloorData[index]?.rect.x2"
-            :y="scene ? firstFloorData[index]?.rect.y : firstFloorData[index]?.rect.y2"
+            text-anchor="middle"
+            :x="
+              scene
+                ? firstFloorData[index]?.rect.x
+                : firstFloorData[index]?.rect.x2
+            "
+            :y="
+              scene
+                ? firstFloorData[index]?.rect.y
+                : firstFloorData[index]?.rect.y2
+            "
             font-size="16"
             fill="transparent"
             pointer-events="none"
           >
-            {{ item.customer_name }}
-            {{ item.customer_phone }}
+            <tspan style="text-transform: capitalize;">{{ item.customer_name }}</tspan>
+            <tspan
+              :x="
+                scene
+                  ? firstFloorData[index]?.rect.x
+                  : firstFloorData[index]?.rect.x2
+              "
+              dy="1rem"
+            >
+              {{ item.customer_phone }}
+            </tspan>
           </text>
           <defs>
             <pattern

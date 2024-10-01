@@ -40,7 +40,7 @@ onMounted(() => {
   <nav class="nav">
     <div class="nav__container">
       <RouterLink to="/" class="nav__logo">
-        <img src="@/assets/images/logo.svg" alt="Bier Regen logo" width="90" />
+        <img src="@/assets/images/logo.svg" alt="Bier Regen logo" width="80" />
       </RouterLink>
       <ul class="nav__list">
         <li class="nav__item">
