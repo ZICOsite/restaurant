@@ -98,6 +98,7 @@ onUnmounted(() => {
                 color: 'black',
                 borderRadius: '20px',
               },
+              class: 'custom-tooltip',
             }"
             fill="white"
             fill-opacity="0.5"

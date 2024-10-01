@@ -18,7 +18,9 @@ const router = useRouter();
 const tables = ref(null);
 
 const { send, status, data, close, open } = useWebSocket(
-  `wss://${import.meta.env.VITE_API_SERVER_URL}/ws/tables/?hall_number=1&floor=1`,
+  `wss://${
+    import.meta.env.VITE_API_SERVER_URL
+  }/ws/tables/?hall_number=1&floor=1`,
   {
     autoReconnect: {
       retries: 3,
@@ -100,6 +102,7 @@ onUnmounted(() => {
                 color: 'black',
                 borderRadius: '20px',
               },
+              class: 'custom-tooltip',
             }"
             :d="
               props.scene
@@ -166,7 +169,9 @@ onUnmounted(() => {
             fill="transparent"
             pointer-events="none"
           >
-            <tspan style="text-transform: capitalize;">{{ item.customer_name }}</tspan>
+            <tspan style="text-transform: capitalize">
+              {{ item.customer_name }}
+            </tspan>
             <tspan
               :x="
                 scene
