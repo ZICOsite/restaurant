@@ -284,3 +284,15 @@ button {
 .custom-tooltip {
   text-transform: capitalize;
 }
+
+.text-limited {
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+
+  &:hover {
+    -webkit-line-clamp: unset;
+  }
+}

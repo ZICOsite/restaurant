@@ -167,9 +167,9 @@ watchDebounced(
             ></i>
           </template>
         </Column>
-        <Column field="customer_comment" header="Комментария" style="width: 5%">
+        <Column field="customer_comment" header="Комментарии" style="width: 5%">
           <template #body="{ data }">
-            {{ data.customer_comment ?? "Пусто" }}
+            <span class="text-limited">{{ data.customer_comment ?? "Пусто" }}</span>
           </template>
         </Column>
         <Column field="pledge_comment" header="Залог" style="width: 5%">

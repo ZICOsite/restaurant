@@ -74,7 +74,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/front.webp"
+            xlink:href="@/assets/images/floor2/Second-Floor-Front.webp"
           ></image>
           <image
             v-else
@@ -82,7 +82,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/back.webp"
+            xlink:href="@/assets/images/floor2/Second-Floor-Back.webp"
           ></image>
           <rect
             width="100%"
