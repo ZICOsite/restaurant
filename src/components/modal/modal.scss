@@ -88,6 +88,10 @@
         background: red;
       }
 
+      &._pledge {
+        background: goldenrod;
+      }
+
       &:disabled {
         background: #eee;
         color: #000;
@@ -108,4 +112,13 @@
       text-transform: capitalize;
     }
   }
+}
+
+.pledge_comment_value {
+  margin-bottom: 16px;
+}
+
+.pledge_btns {
+  display: flex;
+  gap: 16px;
 }

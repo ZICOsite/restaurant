@@ -14,22 +14,24 @@ const bookInfoStore = useBookInfoStore();
 
 const userName = ref("");
 const userPhone = ref("");
+const userComment = ref("");
 const startTime = ref(new Date().toLocaleTimeString().slice(0, -3));
 const checked = ref(false);
 const personalData = ref(true);
 
 const currentDate = new Date();
 
-const postBookTable = async (event) => {
+const postBookTable = async () => {
   const formatedPhone = "998" + userPhone.value.replace(/\D/g, "");
   const bookInfo = {
     table_id: +route.query.id,
-    name: event.target.userName.value,
+    name: userName.value,
     phone: formatedPhone,
     booking_datetime: `${tableStore.date || formatDate(currentDate)}, ${
-      event.target.userTime.value
+      startTime.value
     }:00`,
     special_event: checked.value ? "True" : "False",
+    customer_comment: userComment.value,
   };
   bookInfoStore.getBookInfo(bookInfo);
   try {
@@ -40,11 +42,12 @@ const postBookTable = async (event) => {
     bookInfoStore.getSmsCode(data.confirmation_code);
     tableStore.getUserPhoneNumber(userPhone.value);
   } catch (error) {
-    console.log("Error", error);
+    console.error("Error", error);
     bookInfoStore.getShowError(error);
   }
   userName.value = "";
   userPhone.value = "";
+  userComment.value = "";
   startTime.value = "";
   checked.value = false;
   emit("booking-close", false);
@@ -93,6 +96,15 @@ const postBookTable = async (event) => {
               v-model="userPhone"
               mask="(99)999-99-99"
               placeholder="(99) 999-99-99"
+            />
+          </div>
+          <div class="booking__form-comment">
+            <label for="booking__form-comment">Комментария</label>
+            <Textarea
+              v-model="userComment"
+              rows="4"
+              cols="30"
+              placeholder="Комментария"
             />
           </div>
           <label class="booking__form-birth">

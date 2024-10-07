@@ -26,6 +26,7 @@ const postApi = {
       phone: data.phone,
       booking_datetime: data.booking_datetime,
       special_event: data.special_event,
+      customer_comment: data.customer_comment
     });
   },
   postSMSNotification(url, number) {
@@ -72,6 +73,11 @@ const patchApi = {
       last_name: data.last_name,
     });
   },
+  patchPladgeComment(url, data) {
+    return axiosInstance.patch(url, {
+      pledge_comment: data
+    })
+  }
 };
 
 const delApi = {

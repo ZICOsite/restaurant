@@ -49,7 +49,7 @@ watchEffect(() => {
       };
       send(JSON.stringify(filter));
     } catch (error) {
-      console.log("Error", error);
+      console.error("Error", error);
     }
   }
 });
@@ -74,7 +74,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/1-front.webp"
+            xlink:href="@/assets/images/floor1/front.webp"
           ></image>
           <image
             v-else
@@ -82,7 +82,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/1-back.webp"
+            xlink:href="@/assets/images/floor1/back.webp"
           ></image>
           <rect
             width="100%"
@@ -141,8 +141,8 @@ onUnmounted(() => {
                 ? firstFloorData[index]?.rect.y
                 : firstFloorData[index]?.rect.y2
             "
-            :width="38"
-            :height="38"
+            :width="35"
+            :height="35"
             :id="firstFloorData[index].id"
             :fill="
               firstFloorData[index]?.[
@@ -182,6 +182,33 @@ onUnmounted(() => {
             >
               {{ item.customer_phone }}
             </tspan>
+          </text>
+          <circle v-for="(item, index) in tables" :cx="scene
+                ? firstFloorData[index]?.rect.x + 16
+                : firstFloorData[index]?.rect.x2 + 16" :cy="scene
+                ? firstFloorData[index]?.rect.y + 16
+                : firstFloorData[index]?.rect.y2 + 16" r="20" fill="transparent"
+                pointer-events="none"
+                :class="item.status" />
+          <text
+            v-for="(item, index) in tables"
+            text-anchor="middle"
+            :x="
+              scene
+                ? firstFloorData[index]?.rect.x + 16
+                : firstFloorData[index]?.rect.x2 + 16
+            "
+            :y="
+              scene
+                ? firstFloorData[index]?.rect.y + 26
+                : firstFloorData[index]?.rect.y2 + 26
+            "
+            font-size="24"
+            pointer-events="none"
+            fill="transparent"
+            class="number_chair"
+          >
+            {{ firstFloorData[index].id }}
           </text>
           <defs>
             <pattern

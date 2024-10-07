@@ -19,15 +19,15 @@ const selectedStatus = ref();
 const statuses = [
   {
     name: "booked",
-    translate: "забронировано"
+    translate: "забронировано",
   },
   {
     name: "cancelled",
-    translate: "отменено"
+    translate: "отменено",
   },
   {
     name: "completed",
-    translate: "завершено"
+    translate: "завершено",
   },
 ];
 
@@ -35,7 +35,7 @@ const actions = {
   booked: "забронировано",
   cancelled: "отменено",
   completed: "завершено",
-}
+};
 
 const getSeverity = (status) => {
   switch (status) {
@@ -50,11 +50,7 @@ const getSeverity = (status) => {
   }
 };
 
-const getBookingHistory = async (
-  skip = 0,
-  status = "",
-  search = "",
-) => {
+const getBookingHistory = async (skip = 0, status = "", search = "") => {
   try {
     const { data } = await getApi.getBookingHistory(
       `booking-history/?limit=${historyLimited}&offset=${skip}&status=${status}&search=${search}`
@@ -69,7 +65,11 @@ const getBookingHistory = async (
 };
 
 watchEffect(() => {
-  getBookingHistory(first.value, selectedStatus.value?.name ?? "", customer.value);
+  getBookingHistory(
+    first.value,
+    selectedStatus.value?.name ?? "",
+    customer.value
+  );
 });
 
 watchDebounced(
@@ -83,7 +83,6 @@ watchDebounced(
   },
   { debounce: 500 }
 );
-
 </script>
 <template>
   <section class="history">
@@ -109,7 +108,12 @@ watchDebounced(
           />
         </template>
       </Select>
-      <Button icon="pi pi-refresh" severity="contrast" raised @click="getBookingHistory()" />
+      <Button
+        icon="pi pi-refresh"
+        severity="contrast"
+        raised
+        @click="getBookingHistory()"
+      />
     </div>
     <div class="history__content">
       <DataTable
@@ -152,9 +156,33 @@ watchDebounced(
           header="Номер телефона"
           style="width: 5%"
         ></Column>
-        <Column field="" header="Статус" style="width: 5%">
+        <Column field="special_event" header="ДР" style="width: 5%">
           <template #body="{ data }">
-            <Tag :value="actions[data.status]" :severity="getSeverity(data.status)" />
+            <i
+              :class="{
+                'pi pi-check-circle': data.special_event,
+                'pi pi-times-circle': !data.special_event,
+                'special-event': data.special_event,
+              }"
+            ></i>
+          </template>
+        </Column>
+        <Column field="customer_comment" header="Комментария" style="width: 5%">
+          <template #body="{ data }">
+            {{ data.customer_comment ?? "Пусто" }}
+          </template>
+        </Column>
+        <Column field="pledge_comment" header="Залог" style="width: 5%">
+          <template #body="{ data }">
+            {{ data.pledge_comment ?? "Пусто" }}
+          </template>
+        </Column>
+        <Column field="status" header="Статус" style="width: 5%">
+          <template #body="{ data }">
+            <Tag
+              :value="actions[data.status]"
+              :severity="getSeverity(data.status)"
+            />
           </template>
         </Column>
       </DataTable>

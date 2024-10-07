@@ -7,14 +7,7 @@ const dateDashboard = ref(null);
 
 const chartData = ref();
 const chartOptions = ref();
-
 const curr = new Date();
-let date = new Date(curr.getFullYear(), curr.getMonth() + 1, curr.getDate());
-
-const chooseDate = ref({
-  month: String(curr.getMonth() + 1).padStart(2, "0"),
-  year: curr.getFullYear(),
-});
 
 // maxDate DatePicker
 let nextMonth = curr.getMonth() === 11 ? 0 : curr.getMonth();
@@ -24,8 +17,21 @@ maxDate.value.setMonth(nextMonth);
 // Dashboard дни
 const days = ref([]);
 
-for (let i = 1; i <= date.getDate(); i++) {
-  days.value.push(i);
+const chooseDate = ref({
+  month: String(curr.getMonth() + 1).padStart(2, "0"),
+  year: curr.getFullYear(),
+});
+
+function getCurrentDayOrDaysInMonth(year, month) {
+  if (curr.getFullYear() === year && curr.getMonth() + 1 === month) return curr.getDate()
+  else return new Date(year, month, 0).getDate()
+}
+
+function getStatistics(year, month) {
+  days.value.length = 0
+  for (let i = 1; i <= getCurrentDayOrDaysInMonth(year, month); i++) {
+    days.value.push(i);
+  }
 }
 
 const setChartOptions = () => {
@@ -106,6 +112,7 @@ const getDashboard = async (
 onMounted(() => {
   getDashboard();
   chartOptions.value = setChartOptions();
+  getStatistics(curr.getFullYear(), curr.getMonth() + 1)
 });
 
 // Обновляем данные графика при изменении dateDashboard
@@ -114,6 +121,7 @@ watch(dateDashboard, (newDate) => {
     String(newDate.getMonth() + 1).padStart(2, "0"),
     newDate.getFullYear()
   );
+  getStatistics(newDate.getFullYear(), newDate.getMonth() + 1)
 });
 </script>
 

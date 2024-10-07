@@ -80,12 +80,13 @@ router.beforeEach((to, from, next) => {
     decodedToken = jwtDecode(authStore.accessToken);
   } catch (error) {
     console.error("Invalid token:", error);
+    authStore.logout();
   }
 
   if (to.meta.authAdmin && !decodedToken?.is_superuser) {
     next("/login");
   } else {
-    next()
+    next();
   }
 });
 

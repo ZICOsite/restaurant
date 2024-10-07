@@ -99,6 +99,18 @@ button {
       background: white;
       color: black;
       border-radius: 20px;
+
+      & ~ rect {
+        opacity: 0;
+      }
+
+      & ~ .number_chair {
+        fill: #fff;
+      }
+
+      & ~ circle {
+        fill: #00e567;
+      }
     }
   }
 

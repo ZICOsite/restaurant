@@ -100,17 +100,19 @@
     }
 
     &-name,
-    &-phone {
+    &-phone,
+    &-comment {
       color: rgb(109, 109, 109);
       font-weight: 500;
       font-size: 18px;
       display: grid;
       gap: 12px;
 
-      input {
+      input, textarea {
         background: rgba(243, 244, 246, 1);
         color: #5f6368;
         border: 1px solid rgb(212, 212, 212);
+        resize: none;
       }
     }
 

@@ -18,7 +18,9 @@ const router = useRouter();
 const tables = ref(null);
 
 const { send, status, data, close, open } = useWebSocket(
-  `wss://${import.meta.env.VITE_API_SERVER_URL}/ws/tables/?hall_number=1&floor=2`,
+  `wss://${
+    import.meta.env.VITE_API_SERVER_URL
+  }/ws/tables/?hall_number=1&floor=2`,
   {
     autoReconnect: {
       retries: 3,
@@ -47,7 +49,7 @@ watchEffect(() => {
       };
       send(JSON.stringify(filter));
     } catch (error) {
-      console.log("Error", error);
+      console.error("Error", error);
     }
   }
 });
@@ -61,14 +63,18 @@ onUnmounted(() => {
   <div class="floor">
     <div class="floor__canvas">
       <div class="floor__canvas-visual">
-        <svg viewBox="0 0 1920 953" preserveAspectRatio="xMidYMid slice" class="mask">
+        <svg
+          viewBox="0 0 1920 953"
+          preserveAspectRatio="xMidYMid slice"
+          class="mask"
+        >
           <image
             v-if="scene === 1"
             x="0"
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/2-front.webp"
+            xlink:href="@/assets/images/floor2/front.webp"
           ></image>
           <image
             v-else
@@ -76,7 +82,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/2-back.webp"
+            xlink:href="@/assets/images/floor2/back.webp"
           ></image>
           <rect
             width="100%"
@@ -87,7 +93,9 @@ onUnmounted(() => {
           <path
             v-for="(item, index) in tables"
             :key="item.id"
-            :d="scene ? secondFloorData[index].path : secondFloorData[index].path2"
+            :d="
+              scene ? secondFloorData[index].path : secondFloorData[index].path2
+            "
             :id="secondFloorData[index].id"
             v-tooltip="{
               value: authStore.accessToken
@@ -121,10 +129,18 @@ onUnmounted(() => {
           <rect
             v-for="(item, index) in tables"
             :key="item.table_id"
-            :x="scene ? secondFloorData[index].rect.x : secondFloorData[index].rect.x2"
-            :y="scene ? secondFloorData[index].rect.y : secondFloorData[index].rect.y2"
-            :width="38"
-            :height="38"
+            :x="
+              scene
+                ? secondFloorData[index].rect.x
+                : secondFloorData[index].rect.x2
+            "
+            :y="
+              scene
+                ? secondFloorData[index].rect.y
+                : secondFloorData[index].rect.y2
+            "
+            :width="secondFloorData[index].size ?? 35"
+            :height="secondFloorData[index].size ?? 35"
             :id="secondFloorData[index].id"
             :fill="
               secondFloorData[index]?.[
@@ -136,14 +152,24 @@ onUnmounted(() => {
           />
           <text
             v-for="(item, index) in tables"
-            :x="scene ? secondFloorData[index]?.rect.x : secondFloorData[index]?.rect.x2"
-            :y="scene ? secondFloorData[index]?.rect.y : secondFloorData[index]?.rect.y2"
+            :x="
+              scene
+                ? secondFloorData[index]?.rect.x
+                : secondFloorData[index]?.rect.x2
+            "
+            :y="
+              scene
+                ? secondFloorData[index]?.rect.y
+                : secondFloorData[index]?.rect.y2
+            "
             font-size="16"
             fill="transparent"
             pointer-events="none"
             text-anchor="middle"
           >
-          <tspan style="text-transform: capitalize;">{{ item.customer_name }}</tspan>
+            <tspan style="text-transform: capitalize">
+              {{ item.customer_name }}
+            </tspan>
             <tspan
               :x="
                 scene
@@ -154,6 +180,43 @@ onUnmounted(() => {
             >
               {{ item.customer_phone }}
             </tspan>
+          </text>
+          <circle
+            v-for="(item, index) in tables"
+            :cx="
+              scene
+                ? secondFloorData[index]?.rect.x + 16
+                : secondFloorData[index]?.rect.x2 + 16
+            "
+            :cy="
+              scene
+                ? secondFloorData[index]?.rect.y + 16
+                : secondFloorData[index]?.rect.y2 + 16
+            "
+            r="20"
+            fill="transparent"
+            pointer-events="none"
+            :class="item.status"
+          />
+          <text
+            v-for="(item, index) in tables"
+            text-anchor="middle"
+            :x="
+              scene
+                ? secondFloorData[index]?.rect.x + 16
+                : secondFloorData[index]?.rect.x2 + 16
+            "
+            :y="
+              scene
+                ? secondFloorData[index]?.rect.y + 26
+                : secondFloorData[index]?.rect.y2 + 26
+            "
+            font-size="24"
+            pointer-events="none"
+            fill="transparent"
+            class="number_chair"
+          >
+            {{ secondFloorData[index].id }}
           </text>
           <defs>
             <pattern

@@ -3,7 +3,7 @@ import { ref } from "vue";
 let today = new Date();
 let month = today.getMonth();
 let year = today.getFullYear();
-let prevMonth = month === 0 ? 11 : month - 1; // исправил на month - 1
+let prevMonth = month === 0 ? 11 : month; // исправил на month - 1
 let prevYear = prevMonth === 11 ? year - 1 : year;
 let nextDate = new Date(today); // создаем новую дату для вычисления через 3 месяца
 nextDate.setMonth(month + 3); // корректное вычисление следующего месяца и года

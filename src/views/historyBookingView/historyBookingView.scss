@@ -27,6 +27,14 @@
     border-radius: 7px;
     overflow: hidden;
 
+    .special-event {
+      color: #3ce46b;
+    }
+
+    i {
+      color: rgb(255, 80, 80);
+    }
+
     .p-datatable-column-title {
       font-weight: 500;
     }
