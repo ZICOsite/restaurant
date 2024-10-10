@@ -1,10 +1,13 @@
 <script setup>
 import { secondFloorData } from "@/helpers/svgPath";
 import { useWebSocket } from "@vueuse/core";
-import { onUnmounted, watchEffect, ref } from "vue";
+import { onUnmounted, watchEffect, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
 import { useAuthStore } from "@/stores/authStore";
+import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
+import Message from "primevue/message";
+import { getApi } from "@/services/api";
 
 const props = defineProps({
   active: Object,
@@ -13,6 +16,7 @@ const props = defineProps({
 
 const tableStore = useTableStore();
 const authStore = useAuthStore();
+const swipeSceneStore = useSwipeSceneStore();
 const router = useRouter();
 
 const tables = ref(null);
@@ -31,6 +35,11 @@ const { send, status, data, close, open } = useWebSocket(
     },
   }
 );
+
+const getSocketStatus = async () => {
+  const { data } = await getApi.getSocketStatus("socket-status/1/");
+  swipeSceneStore.getStatusSocket(data.active);
+};
 
 watchEffect(() => {
   if (data.value) {
@@ -104,7 +113,7 @@ onUnmounted(() => {
               dt: {
                 background: 'white',
                 color: 'black',
-                borderRadius: '20px',
+                borderRadius: '15px',
               },
               class: 'custom-tooltip',
             }"
@@ -122,6 +131,7 @@ onUnmounted(() => {
             :class="[
               {
                 active: active?.table_id === item.table_id,
+                disabled: !swipeSceneStore.statusSocket
               },
               item.status,
             ]"
@@ -265,5 +275,13 @@ onUnmounted(() => {
         </svg>
       </div>
     </div>
+    <Message
+      v-if="!swipeSceneStore.statusSocket"
+      class="floor__block-booking"
+      severity="contrast"
+      icon="pi pi-info-circle"
+    >
+      Бронирование отключено
+    </Message>
   </div>
 </template>

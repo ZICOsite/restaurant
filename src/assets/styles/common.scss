@@ -87,6 +87,11 @@ button {
       }
     }
 
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.2;
+    }
+
     // &.booked {
     //   stroke-opacity: 1;
     //   stroke: red;

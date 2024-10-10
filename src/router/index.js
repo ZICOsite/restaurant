@@ -74,20 +74,32 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
-  let decodedToken;
 
-  try {
-    decodedToken = jwtDecode(authStore.accessToken);
-  } catch (error) {
-    console.error("Invalid token:", error);
-    authStore.logout();
+  // Проверяем наличие токена
+  if (authStore.accessToken) {
+    let decodedToken;
+
+    try {
+      // Декодируем токен
+      decodedToken = jwtDecode(authStore.accessToken);
+    } catch (error) {
+      // Если токен невалиден или истек
+      console.error("Invalid token:", error);
+      authStore.logout();
+      return next("/login"); // Прекращаем выполнение и перенаправляем на страницу входа
+    }
+
+    // Проверяем, если требуется админская роль
+    if (to.meta.authAdmin && !decodedToken.is_superuser) {
+      return next("/login"); // Если пользователь не админ, перенаправляем на вход
+    }
+  } else if (to.meta.authAdmin) {
+    // Если требуется авторизация, но токена нет
+    return next("/login");
   }
 
-  if (to.meta.authAdmin && !decodedToken?.is_superuser) {
-    next("/login");
-  } else {
-    next();
-  }
+  // Если все проверки пройдены, разрешаем переход
+  next();
 });
 
 export default router;

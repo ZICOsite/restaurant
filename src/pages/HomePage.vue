@@ -10,7 +10,7 @@ const showEvent = ref(false);
 onMounted(() => {
   setTimeout(() => {
     showEvent.value = true;
-  }, 10);
+  }, 10000);
 });
 </script>
 

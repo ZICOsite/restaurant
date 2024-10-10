@@ -115,7 +115,7 @@ const postBookTable = async () => {
             <Checkbox v-model="personalData" :binary="true" />
             <span>
               Я даю согласие на обработку моих <br />
-              <u style="color: red">персональных данных</u>
+              <a href="/Consent_to_the_processing_of_personal_data.pdf" target="_blank" style="color: red; text-decoration: underline;">персональных данных</a>
             </span>
           </label>
         </div>

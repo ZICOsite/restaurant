@@ -8,6 +8,10 @@
     display: none;
   }
 
+  &-tooltip {
+    text-align: center;
+  }
+
   &__container {
     display: flex;
     justify-content: space-between;

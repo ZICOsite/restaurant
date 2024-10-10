@@ -16,6 +16,9 @@ const getApi = {
   getHostesId(url) {
     return axiosInstance.get(url);
   },
+  getSocketStatus(url) {
+    return axiosInstance.get(url);
+  },
 };
 
 const postApi = {
@@ -26,7 +29,7 @@ const postApi = {
       phone: data.phone,
       booking_datetime: data.booking_datetime,
       special_event: data.special_event,
-      customer_comment: data.customer_comment
+      customer_comment: data.customer_comment,
     });
   },
   postSMSNotification(url, number) {
@@ -51,9 +54,9 @@ const postApi = {
   },
   postRefreshToken(url, refresh) {
     return axiosInstance.post(url, {
-      refresh: refresh
-    })
-  }
+      refresh: refresh,
+    });
+  },
 };
 
 const putApi = {
@@ -75,15 +78,20 @@ const patchApi = {
   },
   patchPladgeComment(url, data) {
     return axiosInstance.patch(url, {
-      pledge_comment: data
-    })
-  }
+      pledge_comment: data,
+    });
+  },
+  patchSocketPatch(url, data) {
+    return axiosInstance.patch(url, {
+      active: data,
+    });
+  },
 };
 
 const delApi = {
   deleteHostesUser(url) {
     return axiosInstance.delete(url);
   },
-}
+};
 
 export { getApi, postApi, putApi, patchApi, delApi };

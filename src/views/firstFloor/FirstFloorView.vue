@@ -100,7 +100,7 @@ onUnmounted(() => {
               dt: {
                 background: 'white',
                 color: 'black',
-                borderRadius: '20px',
+                borderRadius: '15px',
               },
               class: 'custom-tooltip',
             }"
@@ -183,13 +183,23 @@ onUnmounted(() => {
               {{ item.customer_phone }}
             </tspan>
           </text>
-          <circle v-for="(item, index) in tables" :cx="scene
+          <circle
+            v-for="(item, index) in tables"
+            :cx="
+              scene
                 ? firstFloorData[index]?.rect.x + 16
-                : firstFloorData[index]?.rect.x2 + 16" :cy="scene
+                : firstFloorData[index]?.rect.x2 + 16
+            "
+            :cy="
+              scene
                 ? firstFloorData[index]?.rect.y + 16
-                : firstFloorData[index]?.rect.y2 + 16" r="20" fill="transparent"
-                pointer-events="none"
-                :class="item.status" />
+                : firstFloorData[index]?.rect.y2 + 16
+            "
+            r="20"
+            fill="transparent"
+            pointer-events="none"
+            :class="item.status"
+          />
           <text
             v-for="(item, index) in tables"
             text-anchor="middle"

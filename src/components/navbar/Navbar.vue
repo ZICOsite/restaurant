@@ -1,20 +1,29 @@
 <script setup>
-import {
-  IconLogIn,
-  IconPersonSearch,
-  IconMenu,
-} from "@/helpers/icones";
+import { IconLogIn, IconPersonSearch, IconMenu } from "@/helpers/icones";
 import { useAuthStore } from "@/stores/authStore";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 import { onMounted, ref } from "vue";
 import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
+import { getApi, patchApi } from "@/services/api";
 
 const authStore = useAuthStore();
-const swipeSceneStore = useSwipeSceneStore()
-const scene = ref(false)
-
+const swipeSceneStore = useSwipeSceneStore();
 const toast = useToast();
+
+const scene = ref(false);
+
+const toggleDisableBooking = async () => {
+  try {
+    swipeSceneStore.switchBooking();
+    await patchApi.patchSocketPatch(
+      "socket-status/update/1/",
+      swipeSceneStore.statusSocket
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const show = () => {
   toast.add({
@@ -26,14 +35,21 @@ const show = () => {
 };
 
 const changeScene = () => {
-  scene.value = !scene.value
-  swipeSceneStore.changeScene(scene.value ? 1 : 0)
-}
+  scene.value = !scene.value;
+  swipeSceneStore.changeScene(scene.value ? 1 : 0);
+};
+
+const getSocketStatus = async () => {
+  const { data } = await getApi.getSocketStatus("socket-status/1/");
+  swipeSceneStore.getStatusSocket(data.active);
+};
 
 onMounted(() => {
-  calendar.addEventListener("click", () => restaurantDate.classList.toggle("active"))
-})
-
+  getSocketStatus();
+  calendar.addEventListener("click", () =>
+    restaurantDate.classList.toggle("active")
+  );
+});
 </script>
 
 <template>
@@ -45,6 +61,7 @@ onMounted(() => {
       <ul class="nav__list">
         <li class="nav__item">
           <Button
+            v-if="!authStore.accessToken"
             as="a"
             label="Меню"
             href="/bierregen-menu.pdf"
@@ -54,6 +71,21 @@ onMounted(() => {
           >
             Меню <IconMenu />
           </Button>
+          <Button
+            v-else
+            @click="toggleDisableBooking"
+            :icon="
+            swipeSceneStore.statusSocket ? 'pi pi-lock-open' : 'pi pi-lock'
+            "
+            aria-label="Filter"
+            severity="contrast"
+            v-tooltip.bottom="{
+              value: swipeSceneStore.statusSocket
+                ? 'Отключить бронь на 2 этаже'
+                : 'Включить бронь на 2 этаже',
+              class: 'nav-tooltip',
+            }"
+          />
         </li>
         <li class="nav__item">
           <a href="tel:+998991080808" class="nav__link">+998 99-108-08-08</a>
@@ -91,12 +123,25 @@ onMounted(() => {
         <img src="@/assets/images/logo.svg" alt="" width="90" />
       </li>
       <li class="nav-mobile__item">
-        <a href="/bierregen-menu.pdf" target="_blank">
+        <a
+          href="/bierregen-menu.pdf"
+          target="_blank"
+          v-if="!authStore.accessToken"
+        >
           <i
             style="color: #000; font-size: 1.3rem"
             class="pi pi-list-check"
           ></i>
         </a>
+        <Button
+          v-else
+          @click="toggleDisableBooking"
+          :icon="
+            swipeSceneStore.statusSocket ? 'pi pi-lock-open' : 'pi pi-lock'
+          "
+          aria-label="Filter"
+          severity="contrast"
+        />
       </li>
       <li class="nav-mobile__item">
         <a href="tel:+998991080808">

@@ -29,9 +29,10 @@ export const useAuthStore = defineStore("auth", {
     setUser(data) {
       this.user = data;
     },
-    setRefreshToken(data) {
+    setAccessToken(data) {
       const { access } = data;
-      this.setTokens(access);
+      this.accessToken = access;
+      localStorage.setItem("accessToken", access);
     },
   },
 });
