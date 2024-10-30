@@ -36,10 +36,10 @@ const { send, status, data, close, open } = useWebSocket(
   }
 );
 
-const getSocketStatus = async () => {
-  const { data } = await getApi.getSocketStatus("socket-status/1/");
-  swipeSceneStore.getStatusSocket(data.active);
-};
+// const getSocketStatus = async () => {
+//   const { data } = await getApi.getSocketStatus("socket-status/1/");
+//   swipeSceneStore.getStatusSocket(data.active);
+// };
 
 watchEffect(() => {
   if (data.value) {

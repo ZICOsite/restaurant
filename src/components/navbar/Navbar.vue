@@ -40,8 +40,12 @@ const changeScene = () => {
 };
 
 const getSocketStatus = async () => {
-  const { data } = await getApi.getSocketStatus("socket-status/1/");
-  swipeSceneStore.getStatusSocket(data.active);
+  try {
+    const { data } = await getApi.getSocketStatus("socket-status/1/");
+    swipeSceneStore.getStatusSocket(data.second_floor);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 onMounted(() => {
@@ -75,7 +79,7 @@ onMounted(() => {
             v-else
             @click="toggleDisableBooking"
             :icon="
-            swipeSceneStore.statusSocket ? 'pi pi-lock-open' : 'pi pi-lock'
+              swipeSceneStore.statusSocket ? 'pi pi-lock-open' : 'pi pi-lock'
             "
             aria-label="Filter"
             severity="contrast"
