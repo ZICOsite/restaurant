@@ -15,13 +15,12 @@ import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
 
 const tableStore = useTableStore();
 const route = useRoute();
-const swipeSceneStore = useSwipeSceneStore()
+const swipeSceneStore = useSwipeSceneStore();
 
 const isModal = ref(false);
 const isBooking = ref(false);
 const isNotification = ref(false);
 const selectedChair = ref(null);
-// const scene = ref(1);
 const floor = ref(1);
 
 const date = ref();
@@ -54,19 +53,20 @@ const notificationClose = (boolean) => {
 
 const handleFloorChange = (value) => {
   floor.value = value;
+  swipeSceneStore.setFloor(value);
 };
 
-const handleChangeSceneFront = () => (swipeSceneStore.changeScene(1));
-const handleChangeSceneBack = () => (swipeSceneStore.changeScene(0));
+const handleChangeSceneFront = () => swipeSceneStore.changeScene(1);
+const handleChangeSceneBack = () => swipeSceneStore.changeScene(0);
 
 const currentDate = new Date();
 
 const getFormatDate = () => {
   tableStore.getDateFormat(formatDate(date.value ?? new Date()));
-  restaurantDate.classList.remove("active")
+  restaurantDate.classList.remove("active");
 };
 
-const closeForm = () => restaurantDate.classList.remove("active")
+const closeForm = () => restaurantDate.classList.remove("active");
 
 watchEffect(async () => {
   try {
@@ -84,7 +84,7 @@ watch(date, (newDate) => {
   tableStore.getDate(formatDate(newDate));
 });
 
-onMounted(() => closeForm())
+onMounted(() => closeForm());
 </script>
 
 <template>
@@ -129,7 +129,10 @@ onMounted(() => closeForm())
       >
         2 Этаж
       </li>
-      <li class="restaurant__floors-glider" :class="{active: floor === 2}"></li>
+      <li
+        class="restaurant__floors-glider"
+        :class="{ active: floor === 2 }"
+      ></li>
     </ul>
     <div class="restaurant__slide">
       <span class="restaurant__slide-item" @click="handleChangeSceneFront">
@@ -163,11 +166,7 @@ onMounted(() => closeForm())
         />
       </div>
       <button class="restaurant__date-btn">Просмотреть</button>
-      <button
-        class="restaurant__date-btn"
-        type="reset"
-        @click="closeForm"
-      >
+      <button class="restaurant__date-btn" type="reset" @click="closeForm">
         Закрыть
       </button>
     </form>

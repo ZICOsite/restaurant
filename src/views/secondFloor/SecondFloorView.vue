@@ -36,11 +36,6 @@ const { send, status, data, close, open } = useWebSocket(
   }
 );
 
-// const getSocketStatus = async () => {
-//   const { data } = await getApi.getSocketStatus("socket-status/1/");
-//   swipeSceneStore.getStatusSocket(data.active);
-// };
-
 watchEffect(() => {
   if (data.value) {
     try {
@@ -131,7 +126,7 @@ onUnmounted(() => {
             :class="[
               {
                 active: active?.table_id === item.table_id,
-                disabled: !swipeSceneStore.statusSocket
+                disabled: !swipeSceneStore.blocked.secondFloor
               },
               item.status,
             ]"
@@ -276,7 +271,7 @@ onUnmounted(() => {
       </div>
     </div>
     <Message
-      v-if="!swipeSceneStore.statusSocket"
+      v-if="!swipeSceneStore.blocked.secondFloor"
       class="floor__block-booking"
       severity="contrast"
       icon="pi pi-info-circle"

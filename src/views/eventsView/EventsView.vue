@@ -24,7 +24,7 @@ import { IconLocation } from "../../helpers/icones.js";
             <a href="tel:+998991080808" class="events__content-number">
               +(998)99 108 08 08
             </a>
-            <a href="+998712059808" class="events__content-number">+(998)71 205 98 08</a>
+            <a href="tel:+998712059808" class="events__content-number">+(998)71 205 98 08</a>
           </div>
           <p class="events__content-guest">Гость: <strong>Александр Панайотов</strong></p>
           <a href="https://t.me/BierRegenPub" target="_blank" class="events__content-btn"

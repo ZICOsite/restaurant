@@ -3,19 +3,24 @@ import { defineStore } from "pinia";
 export const useSwipeSceneStore = defineStore("swipeScene", {
   state: () => ({
     scene: 1,
-    statusSocket: null,
+    blocked: {
+      firstFloor: true,
+      secondFloor: true,
+    },
+    floor: 1,
   }),
   actions: {
     changeScene(scene) {
-      // if (scene) this.scene = 1
-      // else this.scene = 0
       this.scene = scene;
     },
-    getStatusSocket(boolean) {
-      this.statusSocket = boolean;
+    setBlocked(floor, boolean) {
+      this.blocked[floor] = boolean;
     },
-    switchBooking() {
-      this.statusSocket = !this.statusSocket;
+    switchBooking(floor) {
+      this.blocked[floor] = !this.blocked[floor];
+    },
+    setFloor(floor) {
+      this.floor = floor;
     },
   },
 });

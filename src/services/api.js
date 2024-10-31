@@ -81,9 +81,10 @@ const patchApi = {
       pledge_comment: data,
     });
   },
-  patchSocketPatch(url, data) {
+  patchSocketPatch(url, firstFloor, secondFloor) {
     return axiosInstance.patch(url, {
-      active: data,
+      first_floor: firstFloor,
+      second_floor: secondFloor,
     });
   },
 };

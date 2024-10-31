@@ -15,10 +15,13 @@ const scene = ref(false);
 
 const toggleDisableBooking = async () => {
   try {
-    swipeSceneStore.switchBooking();
+    swipeSceneStore.switchBooking(
+      swipeSceneStore.floor == 1 ? "firstFloor" : "secondFloor"
+    );
     await patchApi.patchSocketPatch(
       "socket-status/update/1/",
-      swipeSceneStore.statusSocket
+      swipeSceneStore.blocked.firstFloor,
+      swipeSceneStore.blocked.secondFloor
     );
   } catch (error) {
     console.error(error);
@@ -42,7 +45,9 @@ const changeScene = () => {
 const getSocketStatus = async () => {
   try {
     const { data } = await getApi.getSocketStatus("socket-status/1/");
-    swipeSceneStore.getStatusSocket(data.second_floor);
+    // console.log(data);
+    swipeSceneStore.setBlocked("firstFloor", data.first_floor);
+    swipeSceneStore.setBlocked("secondFloor", data.second_floor);
   } catch (error) {
     console.error(error);
   }
@@ -79,14 +84,20 @@ onMounted(() => {
             v-else
             @click="toggleDisableBooking"
             :icon="
-              swipeSceneStore.statusSocket ? 'pi pi-lock-open' : 'pi pi-lock'
+              swipeSceneStore.floor == 1
+                ? swipeSceneStore.blocked.firstFloor
+                  ? 'pi pi-lock-open'
+                  : 'pi pi-lock'
+                : swipeSceneStore.blocked.secondFloor
+                ? 'pi pi-lock-open'
+                : 'pi pi-lock'
             "
             aria-label="Filter"
             severity="contrast"
             v-tooltip.bottom="{
-              value: swipeSceneStore.statusSocket
-                ? 'Отключить бронь на 2 этаже'
-                : 'Включить бронь на 2 этаже',
+              value: swipeSceneStore.blocked.secondFloor
+                ? `Отключить бронь на ${swipeSceneStore.floor} этаже`
+                : `Включить бронь на ${swipeSceneStore.floor} этаже`,
               class: 'nav-tooltip',
             }"
           />
@@ -141,7 +152,13 @@ onMounted(() => {
           v-else
           @click="toggleDisableBooking"
           :icon="
-            swipeSceneStore.statusSocket ? 'pi pi-lock-open' : 'pi pi-lock'
+            swipeSceneStore.floor == 1
+              ? swipeSceneStore.blocked.firstFloor
+                ? 'pi pi-lock-open'
+                : 'pi pi-lock'
+              : swipeSceneStore.blocked.secondFloor
+              ? 'pi pi-lock-open'
+              : 'pi pi-lock'
           "
           aria-label="Filter"
           severity="contrast"

@@ -5,6 +5,7 @@ import { useWebSocket } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
 import { useAuthStore } from "@/stores/authStore";
+import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
 
 const props = defineProps({
   active: Object,
@@ -14,6 +15,7 @@ const props = defineProps({
 const tableStore = useTableStore();
 const authStore = useAuthStore();
 const router = useRouter();
+const swipeSceneStore = useSwipeSceneStore();
 
 const tables = ref(null);
 
@@ -124,6 +126,7 @@ onUnmounted(() => {
             :class="[
               {
                 active: active?.table_id === item.table_id,
+                disabled: !swipeSceneStore.blocked.firstFloor,
               },
               item.status,
             ]"
