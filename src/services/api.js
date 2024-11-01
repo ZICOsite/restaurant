@@ -95,4 +95,52 @@ const delApi = {
   },
 };
 
-export { getApi, postApi, putApi, patchApi, delApi };
+const eventApi = {
+  getEvents(url) {
+    return axiosInstance.get(url);
+  },
+  getSingleEvent(url) {
+    return axiosInstance.get(url);
+  },
+  createEvent(url, data) {
+    return axiosInstance.post(
+      url,
+      {
+        date: data.date,
+        time: data.time,
+        location: data.location,
+        phone_number: data.phone_number,
+        guest_name: data.guest_name,
+        image: data.image,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  },
+  editEvent(url, data) {
+    return axiosInstance.patch(
+      url,
+      {
+        date: data.date,
+        time: data.time,
+        location: data.location,
+        phone_number: data.phone_number,
+        guest_name: data.guest_name,
+        image: data.image,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  },
+  deleteEvent(url) {
+    return axiosInstance.delete(url);
+  },
+};
+
+export { getApi, postApi, putApi, patchApi, delApi, eventApi };

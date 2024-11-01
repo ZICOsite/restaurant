@@ -21,7 +21,7 @@ const router = createRouter({
           component: HomePage,
         },
         {
-          path: "/events",
+          path: "events",
           name: "events",
           component: () => import("@/pages/EventsPage.vue"),
         },
@@ -55,6 +55,14 @@ const router = createRouter({
           path: "settings",
           name: "settings",
           component: () => import("@/pages/SettingsPage.vue"),
+          meta: {
+            authAdmin: true,
+          },
+        },
+        {
+          path: "events",
+          name: "createEvents",
+          component: () => import("@/pages/CreateEventsPage.vue"),
           meta: {
             authAdmin: true,
           },

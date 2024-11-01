@@ -12,6 +12,7 @@ const swipeSceneStore = useSwipeSceneStore();
 const toast = useToast();
 
 const scene = ref(false);
+const calendar = ref(null);
 
 const toggleDisableBooking = async () => {
   try {
@@ -55,7 +56,7 @@ const getSocketStatus = async () => {
 
 onMounted(() => {
   getSocketStatus();
-  calendar.addEventListener("click", () =>
+  calendar.value.addEventListener("click", () =>
     restaurantDate.classList.toggle("active")
   );
 });
@@ -125,7 +126,7 @@ onMounted(() => {
   </nav>
   <nav class="nav-mobile">
     <ul class="nav-mobile__list">
-      <li class="nav-mobile__item" id="calendar">
+      <li class="nav-mobile__item" ref="calendar">
         <i style="color: #000; font-size: 1.3rem" class="pi pi-calendar"></i>
       </li>
       <li class="nav-mobile__item" @click="changeScene">
@@ -160,6 +161,7 @@ onMounted(() => {
               ? 'pi pi-lock-open'
               : 'pi pi-lock'
           "
+          size="large"
           aria-label="Filter"
           severity="contrast"
         />

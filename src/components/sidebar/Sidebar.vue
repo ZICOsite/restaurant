@@ -37,9 +37,9 @@ const logout = () => {
         </RouterLink>
       </li>
       <li class="sidebar__item">
-        <RouterLink to="/" class="sidebar__link disabled">
+        <RouterLink to="/admin/events" class="sidebar__link">
           <IconHistoryBooking />
-          Мероприятия (скоро)
+          Мероприятия
         </RouterLink>
       </li>
       <li class="sidebar__item">
