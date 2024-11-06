@@ -246,7 +246,7 @@ button {
 }
 
 .board {
-  background: url(../images/banner.webp) no-repeat center center / cover;
+  background: #111;
   min-height: 100dvh;
   position: fixed;
   inset: 0;
@@ -254,34 +254,47 @@ button {
   height: 100%;
   z-index: 999;
   display: flex;
-
-  @media (width<=480px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
+  overflow: auto;
+  padding: 60px 0;
 
   div {
-    width: 50%;
+    width: min(450px, 100%);
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 1;
 
-    @media (width<=480px) {
+    &:hover {
+      img {
+        filter: opacity(1) grayscale(0%);
+      }
+    }
+
+    img {
+      height: 450px;
       width: 100%;
+      object-fit: cover;
+      filter: opacity(0.3) grayscale(100%);
+      transition: 0.4s;
+      border-radius: 6px;
+
+      @media (width <= 480px) {
+        height: 300px;
+      }
     }
 
     a,
     button {
-      font-size: clamp(18px, 3vw, 48px);
+      position: absolute;
+      font-size: clamp(18px, 3vw, 18px);
       font-weight: 500;
       padding: 10px 20px;
       text-transform: uppercase;
-
-      @media (width<=480px) {
-        width: 60%;
-      }
     }
   }
 }

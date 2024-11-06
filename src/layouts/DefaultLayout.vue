@@ -18,6 +18,7 @@ onMounted(() => {
   </div>
   <div class="board" v-if="board">
     <div>
+      <img src="../assets/images/menu.jpg" alt="" />
       <Button
         as="a"
         label="Меню"
@@ -27,7 +28,20 @@ onMounted(() => {
       />
     </div>
     <div>
+      <img src="../assets/images/1.jpg" alt="" />
       <Button
+        as="router-link"
+        label="Мероприятия"
+        to="/events"
+        severity="contrast"
+        @click="board = false"
+      />
+    </div>
+    <div>
+      <img src="../assets/images/floor1/First-Floor-Front.webp" alt="" />
+      <Button
+        as="router-link"
+        to="/"
         label="Забронировать столик"
         severity="contrast"
         @click="board = false"
