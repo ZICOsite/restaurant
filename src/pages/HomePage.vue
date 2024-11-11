@@ -5,32 +5,32 @@ import { useAuthStore } from "@/stores/authStore";
 import RestaurantView from "@/views/restaurant/RestaurantView.vue";
 import { onMounted, ref } from "vue";
 
-const authStore = useAuthStore();
-const showEvent = ref(false);
-const events = ref(null);
+// const authStore = useAuthStore();
+// const showEvent = ref(false);
+// const events = ref(null);
 
-const getEvents = async () => {
-  try {
-    const { data } = await eventApi.getEvents("authentication/events/");
-    events.value = data;
-    console.log(data);
-  } catch (error) {
-    console.error("Error", error);
-  }
-};
+// const getEvents = async () => {
+//   try {
+//     const { data } = await eventApi.getEvents("authentication/events/");
+//     events.value = data;
+//     console.log(data);
+//   } catch (error) {
+//     console.error("Error", error);
+//   }
+// };
 
-onMounted(() => {
-  setTimeout(() => {
-    showEvent.value = true;
-    getEvents();
-  }, 10000);
-});
+// onMounted(() => {
+//   setTimeout(() => {
+//     showEvent.value = true;
+//     getEvents();
+//   }, 10000);
+// });
 </script>
 
 <template>
   <main>
     <RestaurantView />
-    <div
+    <!-- <div
       class="_event"
       @click="showEvent = false"
       v-show="showEvent && !authStore.accessToken"
@@ -48,6 +48,6 @@ onMounted(() => {
           Купить билеты
         </a>
       </div>
-    </div>
+    </div> -->
   </main>
 </template>
