@@ -5,6 +5,7 @@ import { useAuthStore } from "@/stores/authStore";
 import RestaurantView from "@/views/restaurant/RestaurantView.vue";
 import { onMounted, ref } from "vue";
 
+const board = ref(true);
 // const authStore = useAuthStore();
 // const showEvent = ref(false);
 // const events = ref(null);
@@ -30,6 +31,38 @@ import { onMounted, ref } from "vue";
 <template>
   <main>
     <RestaurantView />
+    <div class="board" v-if="board">
+      <div>
+        <img src="@/assets/images/floor1/First-Floor-Front.webp" alt="" />
+        <Button
+          as="router-link"
+          to="/"
+          label="Бронирование"
+          severity="contrast"
+          @click="board = false"
+        />
+      </div>
+      <div>
+        <img src="@/assets/images/1.jpg" alt="" />
+        <Button
+          as="router-link"
+          label="Мероприятия"
+          to="/events"
+          severity="contrast"
+          @click="board = false"
+        />
+      </div>
+      <div>
+        <img src="@/assets/images/menu.jpg" alt="" />
+        <Button
+          as="a"
+          label="Меню"
+          href="/bierregen-menu.pdf"
+          rel="noopener"
+          severity="contrast"
+        />
+      </div>
+    </div>
     <!-- <div
       class="_event"
       @click="showEvent = false"

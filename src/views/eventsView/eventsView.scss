@@ -9,6 +9,22 @@
     color: #fff;
   }
 
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  &__btns {
+    display: flex;
+    gap: 12px;
+
+    button, a {
+      width: 100%;
+    }
+  }
+
   &__content {
     position: relative;
     z-index: 1;
@@ -25,6 +41,7 @@
       object-fit: cover;
       height: 100%;
       max-height: 450px;
+      background: #f0f0f0;
 
       @media (width <= 1150px) {
         width: 100%;

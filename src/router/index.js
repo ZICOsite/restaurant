@@ -25,6 +25,11 @@ const router = createRouter({
           name: "events",
           component: () => import("@/pages/EventsPage.vue"),
         },
+        {
+          path: "events/:id",
+          name: "eventSingle",
+          component: () => import("@/pages/EventSinglePage.vue"),
+        },
       ],
     },
     {
