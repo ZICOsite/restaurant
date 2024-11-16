@@ -29,7 +29,7 @@ const onFileSelect = (event) => {
   createEvent.value.image = event.files[0];
 };
 
-const upload = async () => {
+const setEvent = async () => {
   const getFormatTime = `${new Date(
     createEvent.value.date
   ).getHours()}:${String(
@@ -94,16 +94,14 @@ const editEvent = async (id) => {
   ).padStart(2, "0")}:00`;
 
   const eventData = {
-    date: formatDate(eventSingle.value.date, "table-detail"),
+    date: formatDate(new Date(eventSingle.value.date), "table-detail"),
     time: getFormatTime,
     location: eventSingle.value.location,
     phone_number: eventSingle.value.phone_number,
     guest_name: eventSingle.value.guest_name,
-    image:
-      typeof eventSingle.value.image == "string"
-        ? null
-        : eventSingle.value.image,
+    image: createEvent.value.image
   };
+  
   try {
     await eventApi.editEvent(`authentication/events/${id}/`, eventData);
     edit.value = false;
@@ -217,7 +215,7 @@ onMounted(() => {
       :style="{ width: '30rem' }"
       class="dialog dialog-create"
     >
-      <form class="dialog__form event__form" @submit.prevent="upload">
+      <form class="dialog__form event__form" @submit.prevent="setEvent">
         <DatePicker
           v-model="createEvent.date"
           showIcon
