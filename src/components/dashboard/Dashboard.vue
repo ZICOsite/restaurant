@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import DatePicker from "primevue/datepicker";
 import { getApi } from "@/services/api";
 
@@ -10,9 +10,8 @@ const chartOptions = ref();
 const curr = new Date();
 
 // maxDate DatePicker
-let nextMonth = curr.getMonth() === 11 ? 0 : curr.getMonth();
 const maxDate = ref(new Date());
-maxDate.value.setMonth(nextMonth);
+maxDate.value.setMonth(curr.getMonth());
 
 // Dashboard дни
 const days = ref([]);
