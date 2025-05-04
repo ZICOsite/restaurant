@@ -25,7 +25,7 @@
     display: flex;
     background: #fff;
     border-radius: 50%;
-    
+
     img {
       padding: 2px;
     }
@@ -37,9 +37,51 @@
     gap: 16px;
 
     &-menu {
-      background: #000 !important;
-      color: #fff !important;
-      border: none !important;
+      position: relative;
+      display: flex;
+
+      &:hover {
+        ul {
+          opacity: 1;
+          pointer-events: unset;
+        }
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 30px;
+        background: #000;
+        border-radius: 6px;
+      }
+
+      ul {
+        background: #fff;
+        position: absolute;
+        width: 100%;
+        top: 100%;
+        left: 0;
+        display: grid;
+        text-transform: uppercase;
+        border-radius: 6px;
+        overflow: hidden;
+        pointer-events: none;
+        opacity: 0;
+        transition: 0.3s;
+
+        a {
+          color: #000;
+          display: inline-block;
+          width: 100%;
+          padding: 10px;
+
+          &:hover {
+            background: #000;
+            color: #fff;
+          }
+        }
+      }
     }
   }
 
@@ -56,7 +98,6 @@
   }
 
   &__item {
-
     &:nth-of-type(2) {
       @media (width <= 680px) {
         display: none;
@@ -70,7 +111,8 @@
       }
     }
 
-    &.nav__item_logout, &.nav__item_search {
+    &.nav__item_logout,
+    &.nav__item_search {
       cursor: pointer;
     }
 
@@ -97,21 +139,59 @@
     background: #fff;
     width: 100%;
     padding: 24px 30px;
-  
+
     &__list {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 40px;
     }
-  
+
+    &__item {
+      &-menu {
+        position: relative;
+        &:hover {
+          ul {
+            opacity: 1;
+            pointer-events: unset;
+          }
+        }
+
+        ul {
+          background: #fff;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          transform: translate(-20%, -40%);
+          display: grid;
+          text-transform: uppercase;
+          border-radius: 6px;
+          overflow: hidden;
+          pointer-events: none;
+          opacity: 0;
+          transition: 0.3s;
+
+          a {
+            color: #000;
+            display: inline-block;
+            padding: 10px;
+
+            &:hover {
+              background: #000;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+
     &__item:nth-of-type(2) {
       margin-right: auto;
     }
     &__item:nth-of-type(4) {
       margin-left: auto;
     }
-  
+
     &__logo {
       background: #fff;
       padding: 2px;

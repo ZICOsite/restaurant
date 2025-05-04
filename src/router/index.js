@@ -72,6 +72,14 @@ const router = createRouter({
             authAdmin: true,
           },
         },
+        {
+          path: "menu",
+          name: "menu",
+          component: () => import("@/pages/MenuPage.vue"),
+          meta: {
+            authAdmin: true,
+          },
+        },
       ],
     },
     {

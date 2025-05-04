@@ -5,14 +5,25 @@ import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 import { onMounted, ref } from "vue";
 import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
-import { getApi, patchApi } from "@/services/api";
+import { getApi, patchApi, menuApi } from "@/services/api";
 
 const authStore = useAuthStore();
 const swipeSceneStore = useSwipeSceneStore();
 const toast = useToast();
+const menu = ref(null);
 
 const scene = ref(false);
 const calendar = ref(null);
+
+const getMenu = async () => {
+  try {
+    const { data } = await menuApi.getMenu("authentication/menu/");
+
+    menu.value = data;
+  } catch (error) {
+    console.error("Error", error);
+  }
+};
 
 const toggleDisableBooking = async () => {
   try {
@@ -56,6 +67,7 @@ const getSocketStatus = async () => {
 
 onMounted(() => {
   getSocketStatus();
+  getMenu();
   calendar.value.addEventListener("click", () =>
     restaurantDate.classList.toggle("active")
   );
@@ -70,17 +82,22 @@ onMounted(() => {
       </RouterLink>
       <ul class="nav__list">
         <li class="nav__item">
-          <Button
-            v-if="!authStore.accessToken"
-            as="a"
-            label="Меню"
-            href="/bierregen-menu.pdf"
-            rel="noopener"
-            class="nav__list-menu"
-            target="_blank"
-          >
-            Меню <IconMenu />
-          </Button>
+          <div v-if="!authStore.accessToken" class="nav__list-menu">
+            <span>
+              <i style="color: #fff; font-size: 1.3rem" class="pi pi-book"></i>
+              Меню
+            </span>
+            <ul>
+              <li v-for="item in menu" :key="item.id">
+                <a
+                  :href="`https://api.bierregen.pub${item.file}`"
+                  target="_blank"
+                >
+                  {{ item.lang }}
+                </a>
+              </li>
+            </ul>
+          </div>
           <Button
             v-else
             @click="toggleDisableBooking"
@@ -139,16 +156,21 @@ onMounted(() => {
         <img src="@/assets/images/logo.svg" alt="" width="90" />
       </li>
       <li class="nav-mobile__item">
-        <a
-          href="/bierregen-menu.pdf"
-          target="_blank"
-          v-if="!authStore.accessToken"
-        >
-          <i
-            style="color: #000; font-size: 1.3rem"
-            class="pi pi-list-check"
-          ></i>
-        </a>
+        <div v-if="!authStore.accessToken" class="nav-mobile__item-menu">
+          <span>
+            <i style="color: #000; font-size: 1.3rem" class="pi pi-book"></i>
+          </span>
+          <ul>
+            <li v-for="item in menu" :key="item.id">
+              <a
+                :href="`https://api.bierregen.pub${item.file}`"
+                target="_blank"
+              >
+                {{ item.lang }}
+              </a>
+            </li>
+          </ul>
+        </div>
         <Button
           v-else
           @click="toggleDisableBooking"

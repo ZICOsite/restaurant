@@ -21,7 +21,9 @@ onMounted(() => {
 <template>
   <section class="events">
     <div class="container">
-      <h2 class="events__title">Событие</h2>
+      <h2 class="events__title">
+        {{ events?.length > 0 ? "Событие" : "Пока нет событий" }}
+      </h2>
       <div class="events__cards">
         <Card v-for="item in events" :key="item.id" style="overflow: hidden">
           <template #header>

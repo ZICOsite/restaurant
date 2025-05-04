@@ -99,9 +99,9 @@ const editEvent = async (id) => {
     location: eventSingle.value.location,
     phone_number: eventSingle.value.phone_number,
     guest_name: eventSingle.value.guest_name,
-    image: createEvent.value.image
+    image: createEvent.value.image,
   };
-  
+
   try {
     await eventApi.editEvent(`authentication/events/${id}/`, eventData);
     edit.value = false;
@@ -168,7 +168,7 @@ onMounted(() => {
       <h2 class="event__title">Мероприятия</h2>
       <Button label="Создать" @click="create = true" />
     </div>
-    <div class="event__cards">
+    <div class="event__cards" v-if="events?.length > 0">
       <Card v-for="item in events" :key="item.id" style="overflow: hidden">
         <template #header>
           <img
@@ -207,6 +207,9 @@ onMounted(() => {
           </div>
         </template>
       </Card>
+    </div>
+    <div class="event__empty" v-else>
+      <h2 class="event__empty-title">Пока нет событий</h2>
     </div>
     <Dialog
       v-model:visible="create"
@@ -349,6 +352,14 @@ onMounted(() => {
 
     .p-fileupload {
       justify-content: flex-start;
+    }
+  }
+
+  &__empty {
+    &-title {
+      color: #000;
+      text-align: center;
+      margin: 50px 0;
     }
   }
 }

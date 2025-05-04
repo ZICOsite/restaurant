@@ -1,11 +1,23 @@
 <script setup>
 import { IconClose } from "@/helpers/icones";
-import { eventApi } from "@/services/api";
+import { eventApi, menuApi } from "@/services/api";
 import { useAuthStore } from "@/stores/authStore";
 import RestaurantView from "@/views/restaurant/RestaurantView.vue";
 import { onMounted, ref } from "vue";
 
 const board = ref(true);
+const menu = ref(null);
+
+const getMenu = async () => {
+  try {
+    const { data } = await menuApi.getMenu("authentication/menu/");
+
+    menu.value = data;
+  } catch (error) {
+    console.error("Error", error);
+  }
+};
+
 // const authStore = useAuthStore();
 // const showEvent = ref(false);
 // const events = ref(null);
@@ -20,12 +32,13 @@ const board = ref(true);
 //   }
 // };
 
-// onMounted(() => {
-//   setTimeout(() => {
-//     showEvent.value = true;
-//     getEvents();
-//   }, 10000);
-// });
+onMounted(() => {
+  getMenu();
+  // setTimeout(() => {
+  //   showEvent.value = true;
+  //   getEvents();
+  // }, 10000);
+});
 </script>
 
 <template>
@@ -55,9 +68,11 @@ const board = ref(true);
       <div>
         <img src="@/assets/images/menu.jpg" alt="" />
         <Button
+          v-for="item in menu"
+          :key="item.id"
           as="a"
           label="Меню"
-          href="/bierregen-menu.pdf"
+          :href="`https://api.bierregen.pub${item.file}`"
           rel="noopener"
           severity="contrast"
         />

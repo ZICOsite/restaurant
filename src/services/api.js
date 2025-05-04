@@ -143,4 +143,24 @@ const eventApi = {
   },
 };
 
-export { getApi, postApi, putApi, patchApi, delApi, eventApi };
+const menuApi = {
+  getMenu(url) {
+    return axiosInstance.get(url);
+  },
+  createMenu(url, data) {
+    return axiosInstance.post(
+      url,
+      {
+        lang: data.lang,
+        file: data.file,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  },
+};
+
+export { getApi, postApi, putApi, patchApi, delApi, eventApi, menuApi };
