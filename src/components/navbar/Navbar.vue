@@ -11,6 +11,7 @@ const authStore = useAuthStore();
 const swipeSceneStore = useSwipeSceneStore();
 const toast = useToast();
 const menu = ref(null);
+const visible = ref(false);
 
 const scene = ref(false);
 const calendar = ref(null);
@@ -156,21 +157,9 @@ onMounted(() => {
         <img src="@/assets/images/logo.svg" alt="" width="90" />
       </li>
       <li class="nav-mobile__item">
-        <div v-if="!authStore.accessToken" class="nav-mobile__item-menu">
-          <span>
-            <i style="color: #000; font-size: 1.3rem" class="pi pi-book"></i>
-          </span>
-          <ul>
-            <li v-for="item in menu" :key="item.id">
-              <a
-                :href="`https://api.bierregen.pub${item.file}`"
-                target="_blank"
-              >
-                {{ item.lang }}
-              </a>
-            </li>
-          </ul>
-        </div>
+        <span v-if="!authStore.accessToken" @click="visible = true">
+          <i style="color: #000; font-size: 1.3rem" class="pi pi-book"></i>
+        </span>
         <Button
           v-else
           @click="toggleDisableBooking"
@@ -195,4 +184,22 @@ onMounted(() => {
       </li>
     </ul>
   </nav>
+  <Dialog
+    v-model:visible="visible"
+    modal
+    header="Выберите язык меню"
+    :style="{ width: '25rem' }"
+  >
+    <ul style="display: flex; gap: 8px">
+      <li v-for="item in menu" :key="item.id">
+        <Button
+          as="router-link"
+          :label="item.lang"
+          :href="`https://api.bierregen.pub${item.file}`"
+          severity="contrast"
+          target="_blank"
+        />
+      </li>
+    </ul>
+  </Dialog>
 </template>

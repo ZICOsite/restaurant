@@ -3,10 +3,12 @@ import { IconClose } from "@/helpers/icones";
 import { eventApi, menuApi } from "@/services/api";
 import { useAuthStore } from "@/stores/authStore";
 import RestaurantView from "@/views/restaurant/RestaurantView.vue";
+import Button from "primevue/button";
 import { onMounted, ref } from "vue";
 
 const board = ref(true);
 const menu = ref(null);
+const visible = ref(false);
 
 const getMenu = async () => {
   try {
@@ -67,17 +69,27 @@ onMounted(() => {
       </div>
       <div>
         <img src="@/assets/images/menu.jpg" alt="" />
-        <Button
-          v-for="item in menu"
-          :key="item.id"
-          as="a"
-          label="Меню"
-          :href="`https://api.bierregen.pub${item.file}`"
-          rel="noopener"
-          severity="contrast"
-        />
+        <Button label="Меню" severity="contrast" @click="visible = true" />
       </div>
     </div>
+    <Dialog
+      v-model:visible="visible"
+      modal
+      header="Выберите язык меню"
+      :style="{ width: '25rem' }"
+    >
+      <ul style="display: flex; gap: 8px">
+        <li v-for="item in menu" :key="item.id">
+          <Button
+            as="router-link"
+            :label="item.lang"
+            :href="`https://api.bierregen.pub${item.file}`"
+            severity="contrast"
+            target="_blank"
+          />
+        </li>
+      </ul>
+    </Dialog>
     <!-- <div
       class="_event"
       @click="showEvent = false"
