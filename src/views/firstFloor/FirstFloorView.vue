@@ -1,6 +1,6 @@
 <script setup>
 import { firstFloorData } from "@/helpers/svgPath";
-import { ref, onUnmounted, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import { useWebSocket } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
@@ -20,9 +20,7 @@ const swipeSceneStore = useSwipeSceneStore();
 const tables = ref(null);
 
 const { send, status, data, close, open } = useWebSocket(
-  `wss://${
-    import.meta.env.VITE_API_SERVER_URL
-  }/ws/tables/?hall_number=1&floor=1`,
+  `wss://${import.meta.env.VITE_API_SERVER_URL}/ws/tables/`,
   {
     autoReconnect: {
       retries: 3,
@@ -35,6 +33,13 @@ const { send, status, data, close, open } = useWebSocket(
 );
 
 watchEffect(() => {
+  send(
+    JSON.stringify({
+      action: "set_location",
+      hall_number: "1",
+      floor: "1",
+    })
+  );
   if (data.value) {
     try {
       const parsedData = JSON.parse(data.value);
@@ -55,10 +60,6 @@ watchEffect(() => {
     }
   }
 });
-
-onUnmounted(() => {
-  close();
-});
 </script>
 
 <template>
@@ -76,7 +77,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/First-Floor-Front.webp"
+            xlink:href="@/assets/images/floor1/First-Floor-Front.png"
           ></image>
           <image
             v-else
@@ -84,7 +85,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor1/First-Floor-Back.webp"
+            xlink:href="@/assets/images/floor1/First-Floor-Back.png"
           ></image>
           <rect
             width="100%"
@@ -111,14 +112,14 @@ onUnmounted(() => {
                 ? firstFloorData[index].path
                 : firstFloorData[index].path2
             "
-            :id="firstFloorData[index].id"
+            :id="item.table_id"
             fill="white"
             fill-opacity="0.5"
             @click="
               $emit('modal-open', true, item),
                 router.push({
                   query: {
-                    id: firstFloorData[index].id,
+                    id: item.table_id,
                     date: tableStore.date,
                   },
                 })
@@ -144,9 +145,9 @@ onUnmounted(() => {
                 ? firstFloorData[index]?.rect.y
                 : firstFloorData[index]?.rect.y2
             "
-            :width="35"
-            :height="35"
-            :id="firstFloorData[index].id"
+            :width="25"
+            :height="25"
+            :id="item.table_id"
             :fill="
               firstFloorData[index]?.[
                 authStore.accessToken
@@ -198,7 +199,7 @@ onUnmounted(() => {
                 ? firstFloorData[index]?.rect.y + 16
                 : firstFloorData[index]?.rect.y2 + 16
             "
-            r="20"
+            r="18"
             fill="transparent"
             pointer-events="none"
             :class="item.status"
@@ -213,15 +214,15 @@ onUnmounted(() => {
             "
             :y="
               scene
-                ? firstFloorData[index]?.rect.y + 26
-                : firstFloorData[index]?.rect.y2 + 26
+                ? firstFloorData[index]?.rect.y + 23
+                : firstFloorData[index]?.rect.y2 + 23
             "
-            font-size="24"
+            font-size="18"
             pointer-events="none"
             fill="transparent"
             class="number_chair"
           >
-            {{ firstFloorData[index].id }}
+            {{ item.table_number }}
           </text>
           <defs>
             <pattern

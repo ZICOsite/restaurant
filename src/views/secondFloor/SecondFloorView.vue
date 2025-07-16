@@ -1,13 +1,12 @@
 <script setup>
 import { secondFloorData } from "@/helpers/svgPath";
 import { useWebSocket } from "@vueuse/core";
-import { onUnmounted, watchEffect, ref, onMounted } from "vue";
+import { watchEffect, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
 import { useAuthStore } from "@/stores/authStore";
 import { useSwipeSceneStore } from "@/stores/swipeSceneStore";
 import Message from "primevue/message";
-import { getApi } from "@/services/api";
 
 const props = defineProps({
   active: Object,
@@ -22,9 +21,7 @@ const router = useRouter();
 const tables = ref(null);
 
 const { send, status, data, close, open } = useWebSocket(
-  `wss://${
-    import.meta.env.VITE_API_SERVER_URL
-  }/ws/tables/?hall_number=1&floor=2`,
+  `wss://${import.meta.env.VITE_API_SERVER_URL}/ws/tables/`,
   {
     autoReconnect: {
       retries: 3,
@@ -37,6 +34,13 @@ const { send, status, data, close, open } = useWebSocket(
 );
 
 watchEffect(() => {
+  send(
+    JSON.stringify({
+      action: "set_location",
+      hall_number: "1",
+      floor: "2",
+    })
+  );
   if (data.value) {
     try {
       const parsedData = JSON.parse(data.value);
@@ -58,9 +62,6 @@ watchEffect(() => {
   }
 });
 
-onUnmounted(() => {
-  close();
-});
 </script>
 
 <template>
@@ -78,7 +79,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/Second-Floor-Front.webp"
+            xlink:href="@/assets/images/floor2/Second-Floor-Front.png"
           ></image>
           <image
             v-else
@@ -86,7 +87,7 @@ onUnmounted(() => {
             y="0"
             width="100%"
             height="100%"
-            xlink:href="@/assets/images/floor2/Second-Floor-Back.webp"
+            xlink:href="@/assets/images/floor2/Second-Floor-Back.png"
           ></image>
           <rect
             width="100%"
@@ -96,11 +97,11 @@ onUnmounted(() => {
           ></rect>
           <path
             v-for="(item, index) in tables"
-            :key="item.id"
+            :key="item.table_id"
             :d="
               scene ? secondFloorData[index].path : secondFloorData[index].path2
             "
-            :id="secondFloorData[index].id"
+            :id="item.table_id"
             v-tooltip="{
               value: authStore.accessToken
                 ? `${item.customer_name ?? ''} ${item.customer_phone ?? ''}`
@@ -118,7 +119,7 @@ onUnmounted(() => {
               $emit('modal-open', true, item),
                 router.push({
                   query: {
-                    id: secondFloorData[index].id,
+                    id: item.table_id,
                     date: tableStore.date,
                   },
                 })
@@ -126,7 +127,7 @@ onUnmounted(() => {
             :class="[
               {
                 active: active?.table_id === item.table_id,
-                disabled: !swipeSceneStore.blocked.secondFloor
+                disabled: !swipeSceneStore.blocked.secondFloor,
               },
               item.status,
             ]"
@@ -144,9 +145,9 @@ onUnmounted(() => {
                 ? secondFloorData[index].rect.y
                 : secondFloorData[index].rect.y2
             "
-            :width="secondFloorData[index].size ?? 35"
-            :height="secondFloorData[index].size ?? 35"
-            :id="secondFloorData[index].id"
+            :width="secondFloorData[index].size ?? 25"
+            :height="secondFloorData[index].size ?? 25"
+            :id="item.table_id"
             :fill="
               secondFloorData[index]?.[
                 authStore.accessToken
@@ -198,7 +199,7 @@ onUnmounted(() => {
                 ? secondFloorData[index]?.rect.y + 16
                 : secondFloorData[index]?.rect.y2 + 16
             "
-            r="20"
+            r="18"
             fill="transparent"
             pointer-events="none"
             :class="item.status"
@@ -213,15 +214,15 @@ onUnmounted(() => {
             "
             :y="
               scene
-                ? secondFloorData[index]?.rect.y + 26
-                : secondFloorData[index]?.rect.y2 + 26
+                ? secondFloorData[index]?.rect.y + 23
+                : secondFloorData[index]?.rect.y2 + 23
             "
-            font-size="24"
+            font-size="18"
             pointer-events="none"
             fill="transparent"
             class="number_chair"
           >
-            {{ secondFloorData[index].id }}
+            {{ item.table_number }}
           </text>
           <defs>
             <pattern
