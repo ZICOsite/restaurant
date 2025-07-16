@@ -2,21 +2,6 @@
 
 const firstFloorData = [
   {
-    id: "100",
-    floor: 1,
-    path: "",
-    path2: "",
-    rect: {
-      x: "",
-      y: "",
-      x2: "",
-      y2: "",
-    },
-    booked: "url(#pattern0_284_4)",
-    available: "url(#pattern2_284_4)",
-    special_event: "url(#pattern1_284_4)",
-  },
-  {
     id: "1",
     floor: 1,
     path: "M729.39 562.159L727.281 555.83L696.164 577.247V584.279L697.008 594.125L698.696 591.593L708.998 597.426L709.907 594.125V600.876H712.017V591.025C711.776 590.181 723.249 596.701 723.249 596.701V603.887L725.181 604.249L728.092 607.628L738.942 614.664C740.536 614.43 740.049 608.498 741.062 606.923C742.075 605.347 751.311 599.001 755.531 596.376L770.461 586.279V579.459L766.804 580.444C764.037 579.553 758.533 577.547 758.646 576.646C758.758 575.746 756.54 575.709 756.821 573.974L742.475 567.082H740.361L729.39 562.159Z",
@@ -1161,8 +1146,8 @@ const firstFloorData = [
     rect: {
       x: 1166,
       y: 62,
-      x2: "",
-      y2: "",
+      x2: -500,
+      y2: -500,
     },
     booked: "url(#pattern0_284_4)",
     available: "url(#pattern2_284_4)",
@@ -1323,6 +1308,21 @@ const firstFloorData = [
       y: 767,
       x2: 963,
       y2: 197,
+    },
+    booked: "url(#pattern0_284_4)",
+    available: "url(#pattern2_284_4)",
+    special_event: "url(#pattern1_284_4)",
+  },
+  {
+    id: "82",
+    floor: 1,
+    path: "",
+    path2: "",
+    rect: {
+      x: -500,
+      y: -500,
+      x2: -500,
+      y2: -500,
     },
     booked: "url(#pattern0_284_4)",
     available: "url(#pattern2_284_4)",
@@ -1911,7 +1911,7 @@ const secondFloorData = [
 
 export { firstFloorData, secondFloorData };
 
-// Зимняя версия 
+// Зимняя версия
 
 // const firstFloorData = [
 //   {
