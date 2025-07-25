@@ -1,6 +1,6 @@
 <script setup>
 import { firstFloorData } from "@/helpers/svgPath";
-import { ref, watchEffect } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { useWebSocket } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
@@ -33,13 +33,13 @@ const { send, status, data, close, open } = useWebSocket(
 );
 
 watchEffect(() => {
-  send(
-    JSON.stringify({
-      action: "set_location",
-      hall_number: "1",
-      floor: "1",
-    })
-  );
+  // send(
+  //   JSON.stringify({
+  //     action: "set_location",
+  //     hall_number: "1",
+  //     floor: "1",
+  //   })
+  // );
   if (data.value) {
     try {
       const parsedData = JSON.parse(data.value);
@@ -59,6 +59,16 @@ watchEffect(() => {
       console.error("Error", error);
     }
   }
+});
+
+onMounted(() => {
+  send(
+    JSON.stringify({
+      action: "set_location",
+      hall_number: "1",
+      floor: "1",
+    })
+  );
 });
 </script>
 
@@ -271,5 +281,13 @@ watchEffect(() => {
         </svg>
       </div>
     </div>
+    <Message
+      v-if="!swipeSceneStore.blocked.firstFloor"
+      class="floor__block-booking"
+      severity="contrast"
+      icon="pi pi-info-circle"
+    >
+      Бронирование отключено
+    </Message>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup>
 import { secondFloorData } from "@/helpers/svgPath";
 import { useWebSocket } from "@vueuse/core";
-import { watchEffect, ref } from "vue";
+import { watchEffect, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
 import { useAuthStore } from "@/stores/authStore";
@@ -34,13 +34,6 @@ const { send, status, data, close, open } = useWebSocket(
 );
 
 watchEffect(() => {
-  send(
-    JSON.stringify({
-      action: "set_location",
-      hall_number: "1",
-      floor: "2",
-    })
-  );
   if (data.value) {
     try {
       const parsedData = JSON.parse(data.value);
@@ -62,6 +55,15 @@ watchEffect(() => {
   }
 });
 
+onMounted(() => {
+  send(
+    JSON.stringify({
+      action: "set_location",
+      hall_number: "1",
+      floor: "2",
+    })
+  );
+});
 </script>
 
 <template>
