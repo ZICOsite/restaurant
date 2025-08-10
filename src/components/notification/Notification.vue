@@ -70,7 +70,7 @@ onMounted(() => {
       <Transition name="notification">
         <div class="notification__success" v-if="showSuccess">
           <h4 class="notification__success-title">Вы успешно забронировали место!</h4>
-          <img src="@/assets/images/prime-bonus.svg" alt="QR code" class="notification__success-qr" />
+          <!-- <img src="@/assets/images/prime-bonus.svg" alt="QR code" class="notification__success-qr" /> -->
           <RouterLink
             to="/?id=1"
             class="notification__success-link"

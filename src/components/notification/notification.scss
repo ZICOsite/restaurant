@@ -116,11 +116,11 @@
     display: grid;
     gap: 40px;
 
-    &-qr {
-      @media (width <= 768px) {
-        display: none;
-      }
-    }
+    // &-qr {
+    //   @media (width <= 768px) {
+    //     display: none;
+    //   }
+    // }
 
     &-title {
         color: #000;

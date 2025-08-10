@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/services/axios";
+import { axiosInstance, rawAxios } from "@/services/axios";
 
 const getApi = {
   getTable(url) {
@@ -53,7 +53,7 @@ const postApi = {
     });
   },
   postRefreshToken(url, refresh) {
-    return axiosInstance.post(url, {
+    return rawAxios.post(url, {
       refresh: refresh,
     });
   },
