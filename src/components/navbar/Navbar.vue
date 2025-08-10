@@ -193,7 +193,7 @@ onMounted(() => {
     <ul style="display: flex; gap: 8px">
       <li v-for="item in menu" :key="item.id">
         <Button
-          as="router-link"
+          as="a"
           :label="item.lang"
           :href="`https://api.bierregen.pub${item.file}`"
           severity="contrast"
