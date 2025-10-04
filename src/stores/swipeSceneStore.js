@@ -8,6 +8,7 @@ export const useSwipeSceneStore = defineStore("swipeScene", {
       secondFloor: true,
     },
     floor: 1,
+    seasonal: true,
   }),
   actions: {
     changeScene(scene) {
@@ -21,6 +22,9 @@ export const useSwipeSceneStore = defineStore("swipeScene", {
     },
     setFloor(floor) {
       this.floor = floor;
+    },
+    setSeasonal() {
+      this.seasonal = !this.seasonal;
     },
   },
 });

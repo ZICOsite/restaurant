@@ -11,3 +11,5 @@ export { default as IconHistoryBooking } from "@/components/icons/IconHistoryBoo
 export { default as IconPersonSearch } from "@/components/icons/IconPersonSearch.vue";
 export { default as IconCake } from "@/components/icons/IconCake.vue";
 export { default as IconMenu } from "@/components/icons/IconMenu.vue";
+export { default as IconSnow } from "@/components/icons/IconSnow.vue";
+export { default as IconSun } from "@/components/icons/IconSun.vue";

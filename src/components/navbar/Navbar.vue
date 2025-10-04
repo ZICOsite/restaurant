@@ -1,5 +1,11 @@
 <script setup>
-import { IconLogIn, IconPersonSearch, IconMenu } from "@/helpers/icones";
+import {
+  IconLogIn,
+  IconPersonSearch,
+  IconMenu,
+  IconSun,
+  IconSnow,
+} from "@/helpers/icones";
 import { useAuthStore } from "@/stores/authStore";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
@@ -121,6 +127,23 @@ onMounted(() => {
             }"
           />
         </li>
+        <li class="nav__item" v-if="authStore.accessToken">
+          <Button
+            @click="swipeSceneStore.setSeasonal"
+            v-tooltip.bottom="{
+              value: swipeSceneStore.seasonal
+                ? 'Летные столики'
+                : 'Зимние столики',
+              class: 'nav-tooltip',
+            }"
+            aria-label="Season"
+            class="nav__item-season"
+            severity="contrast"
+          >
+            <IconSun width="20" height="20" v-if="swipeSceneStore.seasonal" />
+            <IconSnow width="20" height="20" v-else />
+          </Button>
+        </li>
         <li class="nav__item">
           <a href="tel:+998991080808" class="nav__link">+998 99-108-08-08</a>
         </li>
@@ -177,10 +200,16 @@ onMounted(() => {
           severity="contrast"
         />
       </li>
-      <li class="nav-mobile__item">
+      <li class="nav-mobile__item" v-if="!authStore.accessToken">
         <a href="tel:+998991080808">
           <i style="color: #000; font-size: 1.3rem" class="pi pi-phone"></i>
         </a>
+      </li>
+      <li class="nav-mobile__item" v-else>
+        <span @click="swipeSceneStore.setSeasonal">
+          <IconSun color="#000" v-if="swipeSceneStore.seasonal" />
+          <IconSnow color="#000" v-else />
+        </span>
       </li>
     </ul>
   </nav>

@@ -56,7 +56,7 @@ const createMenu = async () => {
     menuData.value.file = "";
     create.value = false;
     loading.value = false;
-    error.value = false;
+    isError.value = false;
   } catch (error) {
     console.error("Error", error);
     loading.value = false;

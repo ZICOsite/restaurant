@@ -39,6 +39,7 @@
     &-menu {
       position: relative;
       display: flex;
+      gap: 16px;
 
       &:hover {
         ul {
@@ -51,10 +52,11 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 12px 30px;
+        padding: 12px 16px;
         background: #000;
         border-radius: 6px;
         color: #fff;
+        cursor: pointer;
       }
 
       ul {
@@ -121,6 +123,11 @@
       @media (width <= 680px) {
         display: none;
       }
+    }
+
+    &-season {
+      width: 2.5rem;
+      padding: 8px 0 !important;
     }
   }
 

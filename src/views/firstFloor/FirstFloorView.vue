@@ -1,6 +1,6 @@
 <script setup>
 import { firstFloorData } from "@/helpers/svgPath";
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref, watch, watchEffect } from "vue";
 import { useWebSocket } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useTableStore } from "@/stores/tableStore";
@@ -33,13 +33,6 @@ const { send, status, data, close, open } = useWebSocket(
 );
 
 watchEffect(() => {
-  // send(
-  //   JSON.stringify({
-  //     action: "set_location",
-  //     hall_number: "1",
-  //     floor: "1",
-  //   })
-  // );
   if (data.value) {
     try {
       const parsedData = JSON.parse(data.value);
@@ -60,6 +53,19 @@ watchEffect(() => {
     }
   }
 });
+
+watch(
+  () => swipeSceneStore.seasonal,
+  (newVal) => {
+    const test = {
+      action: "set_seasonal",
+      hall_number: "1",
+      floor: "1",
+      seasonal: newVal,
+    };
+    send(JSON.stringify(test));
+  }
+);
 
 onMounted(() => {
   send(
@@ -233,6 +239,7 @@ onMounted(() => {
             class="number_chair"
           >
             {{ item.table_number }}
+            <!-- {{ firstFloorData[index].id }} -->
           </text>
           <defs>
             <pattern
