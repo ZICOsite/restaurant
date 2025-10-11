@@ -56,12 +56,11 @@ watchEffect(() => {
 
 watch(
   () => swipeSceneStore.seasonal,
-  (newVal) => {
+  () => {
     const test = {
-      action: "set_seasonal",
+      action: "set_location",
       hall_number: "1",
       floor: "1",
-      seasonal: newVal,
     };
     send(JSON.stringify(test));
   }

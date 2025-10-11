@@ -22,6 +22,19 @@ const visible = ref(false);
 const scene = ref(false);
 const calendar = ref(null);
 
+const switchSeasonal = async () => {
+  try {
+    const newValue = !swipeSceneStore.seasonal;
+    const response = await patchApi.patchSeasonal(
+      "socket-status/update/1/",
+      newValue
+    );
+    swipeSceneStore.setSeasonal(response.data.seasonal);
+  } catch (error) {
+    console.log("Error seasonal");
+  }
+};
+
 const getMenu = async () => {
   try {
     const { data } = await menuApi.getMenu("authentication/menu/");
@@ -64,7 +77,7 @@ const changeScene = () => {
 const getSocketStatus = async () => {
   try {
     const { data } = await getApi.getSocketStatus("socket-status/1/");
-    // console.log(data);
+    console.log(data);
     swipeSceneStore.setBlocked("firstFloor", data.first_floor);
     swipeSceneStore.setBlocked("secondFloor", data.second_floor);
   } catch (error) {
@@ -129,7 +142,7 @@ onMounted(() => {
         </li>
         <li class="nav__item" v-if="authStore.accessToken">
           <Button
-            @click="swipeSceneStore.setSeasonal"
+            @click="switchSeasonal"
             v-tooltip.bottom="{
               value: swipeSceneStore.seasonal
                 ? 'Летные столики'
@@ -206,7 +219,7 @@ onMounted(() => {
         </a>
       </li>
       <li class="nav-mobile__item" v-else>
-        <span @click="swipeSceneStore.setSeasonal">
+        <span @click="switchSeasonal">
           <IconSun color="#000" v-if="swipeSceneStore.seasonal" />
           <IconSnow color="#000" v-else />
         </span>

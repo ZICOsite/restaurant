@@ -87,6 +87,11 @@ const patchApi = {
       second_floor: secondFloor,
     });
   },
+  patchSeasonal(url, seasonal) {
+    return axiosInstance.patch(url, {
+      seasonal,
+    });
+  },
 };
 
 const delApi = {
